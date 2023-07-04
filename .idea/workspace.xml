@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a52d59f7-911a-491f-a3ad-d3eaacfcb33e" name="Changes" comment="Interface_Alpha2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" afterDir="false" />
-    </list>
+    <list default="true" id="a52d59f7-911a-491f-a3ad-d3eaacfcb33e" name="Changes" comment="Interface_AlphaTest" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -102,7 +99,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688485859907</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Interface_AlphaTest">
+      <option name="closed" value="true" />
+      <created>1688498682453</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688498682453</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -120,6 +125,7 @@
     <MESSAGE value="Interface_Alpha" />
     <MESSAGE value="Interface_Alpha1" />
     <MESSAGE value="Interface_Alpha2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Interface_Alpha2" />
+    <MESSAGE value="Interface_AlphaTest" />
+    <option name="LAST_COMMIT_MESSAGE" value="Interface_AlphaTest" />
   </component>
 </project>
