@@ -2,6 +2,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -10,12 +12,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 /* Это база :)*/
 enum class Base {
@@ -38,20 +46,29 @@ enum class State {
     InClosedList
 }
 
+/* Окна */
+enum class WindowTypes {
+    Initialization,
+    Algorithm
+}
+
 class CellView {
     @Composable
-    fun make_box (cell: Cell) {
+    fun makeBox (cell: Cell) {
         Box (
             modifier = Modifier
                 .padding(1.dp)
                 .aspectRatio(1f)
-                .background(Color(get_color(cell.type))),
+                .background(Color(getColor(cell.type))),
             contentAlignment = Center
         ) {
-            Text (text=cell.get_info().toString(), fontSize = 30.sp)
+            Text (
+                text = cell.getInfo().toString(),
+                fontSize = 30.sp
+            )
         }
     }
-    fun get_color (type: Triple<Base, Function, State>): Long {
+    fun getColor (type: Triple<Base, Function, State>): Long {
         var res: Long = 0x00000000
         res = when(type.first) {
             Base.Grass -> 0xff649500
@@ -72,15 +89,15 @@ class CellView {
 
 class Cell (
     var type: Triple<Base, Function, State> = Triple(Base.Grass, Function.Simple, State.Simple),
-    var h: Int = 0,
-    var g: Int = 0,
-    var f: Int = 0
+    var hFunction: Int = 0,
+    var gFunction: Int = 0,
+    var fFunction: Int = 0
 ) {
-    fun get_info(): Triple<Int, Int, Int> {
-        return Triple(h, g, f)
+    fun getInfo (): Triple<Int, Int, Int> {
+        return Triple(hFunction, gFunction, fFunction)
     }
-    fun set_f(a: Int) {
-        f = a
+    fun setF (a: Int) {
+        fFunction = a
     }
 }
 
@@ -90,23 +107,23 @@ class FieldView {
     fun drawField (x: Int, y: Int) {
         Row {
             /* Пространство слева */
-            Box(
+            Box (
                 modifier = Modifier
                     .weight(1f) // цена
                     .padding(16.dp)
                     .fillMaxHeight()
             ) {
-                val field = Array(20) { Cell() }
+                val field = Array(x) { Cell() }
                 field[3].type = Triple(Base.Water, Function.Simple, State.Simple)
                 field[6].type = Triple(Base.Water, Function.Simple, State.Simple)
                 field[8].type = Triple(Base.Water, Function.Simple, State.Simple)
                 field[0].type = Triple(Base.Stone, Function.Simple, State.Simple)
-                val cellview = CellView()
+                val cellView = CellView()
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(5),
+                    columns = GridCells.Fixed(y),
                     content = {
-                        items(20) { i ->
-                            cellview.make_box(field[i])
+                        items(y) { i ->
+                            cellView.makeBox(field[i])
                         }
                     }
                 )
@@ -115,133 +132,125 @@ class FieldView {
             Box(
                 modifier = Modifier
                     .weight(0.5f) // цена
-                    .background(Color.Gray) // цвет
+                    .background(Color.LightGray) // цвет
                     .fillMaxHeight()
             ) {
-                var inputValueX by remember { mutableStateOf("") }
-                var inputValueY by remember { mutableStateOf("") }
-                val isVisibleX by remember {
-                    derivedStateOf {
-                        inputValueX.isNotBlank()
-                    }
-                }
-                val isVisibleY by remember {
-                    derivedStateOf {
-                        inputValueY.isNotBlank()
-                    }
-                }
-                /* Окошко с вводом данных */
-                Column (
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        text = "Введите размеры поля",
-                        fontSize = 20.sp,
-                        modifier = Modifier.padding(5.dp)
-                    )
-                    /* Ввод X */
-                    OutlinedTextField (
-                        value = inputValueX,
-                        onValueChange = { newValue -> inputValueX = newValue },
-                        modifier = Modifier
-                            .padding(5.dp)
-                            .width(200.dp)
-                            .height(65.dp),
-                        label = { Text(text = "Значение X") },
-                        placeholder = { Text(text = "Введите данные") },
-                        singleLine = true,
-                        trailingIcon = {
-                            if (isVisibleX) {
-                                IconButton (
-                                    onClick = { inputValueX = "" }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Clear,
-                                        contentDescription = "Clear"
-                                    )
-                                }
-                            }
-                        }
-                    )
-                    /* Ввод Y */
-                    OutlinedTextField (
-                        value = inputValueY,
-                        onValueChange = { newValue -> inputValueY = newValue },
-                        modifier = Modifier
-                            .padding(5.dp)
-                            .width(200.dp)
-                            .height(65.dp),
-                        label = { Text(text = "Значение Y") },
-                        placeholder = { Text(text = "Введите данные") },
-                        maxLines = 1,
-                        trailingIcon = {
-                            if (isVisibleY) {
-                                IconButton (
-                                    onClick = { inputValueY = "" }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Default.Clear,
-                                        contentDescription = "Clear"
-                                    )
-                                }
-                            }
-                        }
-                    )
-                    /* кнопка отправить */
-                    Button (
-                        onClick = {
-                            /* Тут как то нужно отправлять координаты в функцию рисования */
-                            /* Потом подумаем */
-                        },
-                        modifier = Modifier.padding(15.dp)
-                    ) {
-                        Text (text = "Отправить")
-                    }
-                }
+
             }
         }
     }
 }
 
 /* На будущее */
-//class Controller {
-//    val fieldView = FieldView()
-//    @Composable
-//    fun userInput() {
-//        var inputValueX by remember { mutableStateOf("") }
-//        var inputValueY by remember { mutableStateOf("") }
-//        val isVisibleX by remember {
-//            derivedStateOf {
-//                inputValueX.isNotBlank()
-//            }
-//        }
-//        val isVisibleY by remember {
-//            derivedStateOf {
-//                inputValueY.isNotBlank()
-//            }
-//        }
-//        Surface (
-//            color = MaterialTheme.colors.background
-//        ) {
-//            Row {
-//                fieldView.drawField(10, 10)
-//                Box(
-//                    modifier = Modifier
-//                        .weight(1f)
-//                        .background(Color.Red)
-//                        .fillMaxHeight()
-//                ) {
-//                    // Пусто
-//                }
-//            }
-//        }
-//    }
-//}
+class Controller {
+    var x by mutableStateOf(0)
+    var y by mutableStateOf(0)
+    @Composable
+    fun userInputCord () {
+        Surface(
+            color = MaterialTheme.colors.background
+        ) {
+            Column (
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text (
+                    text = "Введите размеры поля",
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(5.dp)
+                )
+                var inputValueX by remember { mutableStateOf("") }
+                val isVisibleX by remember {
+                    derivedStateOf {
+                        inputValueX.isNotBlank()
+                    }
+                }
+                OutlinedTextField (
+                    value = inputValueX,
+                    onValueChange = { inputValueX = it },
+                    modifier = Modifier
+                        .padding(5.dp),
+                    label = { Text(text = "Значение X") },
+                    placeholder = { Text(text = "Введите данные") },
+                    singleLine = true,
+                    trailingIcon = {
+                        if (isVisibleX) {
+                            IconButton (
+                                onClick = { inputValueX = "" }
+                            ) {
+                                Icon (
+                                    imageVector = Icons.Default.Clear,
+                                    contentDescription = "Clear"
+                                )
+                            }
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+                var inputValueY by remember { mutableStateOf("") }
+                val isVisibleY by remember {
+                    derivedStateOf {
+                        inputValueY.isNotBlank()
+                    }
+                }
+                OutlinedTextField (
+                    value = inputValueY,
+                    onValueChange = { inputValueY = it },
+                    modifier = Modifier
+                        .padding(5.dp),
+                    label = { Text(text = "Значение Y") },
+                    placeholder = { Text(text = "Введите данные") },
+                    singleLine = true,
+                    trailingIcon = {
+                        if (isVisibleY) {
+                            IconButton (
+                                onClick = { inputValueY = "" }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Clear,
+                                    contentDescription = "Clear"
+                                )
+                            }
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+                Button (
+                    onClick = {
+                        x = inputValueX.toIntOrNull() ?: 0
+                        y = inputValueY.toIntOrNull() ?: 0
+                    },
+                    modifier = Modifier.padding(15.dp)
+                ) {
+                    Text (text = "Сохранить")
+                }
+                Button (
+                    onClick = {
+                    },
+                    modifier = Modifier.padding(15.dp)
+                ) {
+                    Text (text = "Отправить")
+                }
+                Text (
+                    text = "Вы ввели: $inputValueX $inputValueY",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp
+                )
+                Text (
+                    text = "Вы сохранили: $x $y",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp
+                )
+            }
+        }
+    }
+}
 
 /* Main с созданием окна */
 fun main() = application {
-    val controller = FieldView()
+    val controller = Controller()
     Window (
         title = "Algorithm A*",
         onCloseRequest = ::exitApplication,
@@ -249,6 +258,6 @@ fun main() = application {
             size = DpSize(1600.dp, 900.dp) // размеры экрана
         )
     ) {
-        controller.drawField(10, 10)
+        controller.userInputCord()
     }
 }
