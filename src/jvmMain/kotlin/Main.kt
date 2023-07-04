@@ -1,4 +1,5 @@
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -54,7 +55,10 @@ class CellView {
             modifier = Modifier
                 .padding(1.dp)
                 .aspectRatio(1f)
-                .background(Color(getColor(cell.type))),
+                .background(Color(getColor(cell.type)))
+                .clickable {
+                    /* Здесь вызывается changeBase */
+                },
             contentAlignment = Center
         ) {
             Text (
@@ -77,6 +81,9 @@ class CellView {
             else -> 0
         }
         return res
+    }
+    fun changeBase (type: Triple<Base, Function, State>) {
+        /* Здесь будет смена БАЗЫ после клика */
     }
 }
 
@@ -114,10 +121,10 @@ class FieldView {
                 field[8].type = Triple(Base.Water, Function.Simple, State.Simple)
                 field[0].type = Triple(Base.Stone, Function.Simple, State.Simple)
                 val cellView = CellView()
-                LazyVerticalGrid(
+                LazyVerticalGrid (
                     columns = GridCells.Fixed(y),
                     content = {
-                        items(y) { i ->
+                        items(x) { i ->
                             cellView.makeBox(field[i])
                         }
                     }
@@ -140,6 +147,8 @@ class FieldView {
 class Controller {
     var x by mutableStateOf(0)
     var y by mutableStateOf(0)
+    var flagToAlgorithm by mutableStateOf(false)
+    private var blockInputs by mutableStateOf(true)
     @Composable
     fun userInputCord () {
         Surface(
@@ -182,7 +191,8 @@ class Controller {
                             }
                         }
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    enabled = blockInputs
                 )
                 var inputValueY by remember { mutableStateOf("") }
                 val isVisibleY by remember {
@@ -210,21 +220,23 @@ class Controller {
                             }
                         }
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    enabled = blockInputs
                 )
                 Button (
                     onClick = {
                         x = inputValueX.toIntOrNull() ?: 0
                         y = inputValueY.toIntOrNull() ?: 0
                     },
-                    modifier = Modifier.padding(15.dp)
+                    modifier = Modifier.padding(15.dp),
+                    enabled = blockInputs
                 ) {
                     Text (text = "Сохранить")
                 }
                 Button (
-                    onClick = {
-                    },
-                    modifier = Modifier.padding(15.dp)
+                    onClick = { flagToAlgorithm = true; blockInputs = false },
+                    modifier = Modifier.padding(5.dp),
+                    enabled = blockInputs
                 ) {
                     Text (text = "Отправить")
                 }
@@ -238,20 +250,36 @@ class Controller {
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp
                 )
+                Text (
+                    text = "$flagToAlgorithm",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp
+                )
             }
         }
     }
 }
-
-/* Main с созданием окна */
 fun main() = application {
     val controller = Controller()
+    val fieldView = FieldView()
     Window (
         title = "Algorithm A*",
         onCloseRequest = ::exitApplication,
         state = WindowState(
             size = DpSize(1600.dp, 900.dp) // размеры экрана
         )
+    ) {
+        if (controller.flagToAlgorithm) {
+            fieldView.drawField(controller.x, controller.y)
+        }
+    }
+    Window (
+        title = "Initialization",
+        onCloseRequest = ::exitApplication,
+        state = WindowState(
+            size = DpSize(600.dp, 500.dp) // размеры экрана
+        ),
+        resizable = false
     ) {
         controller.userInputCord()
     }
