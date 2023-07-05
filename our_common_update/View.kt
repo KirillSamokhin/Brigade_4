@@ -112,7 +112,6 @@ class CellView{
     }
 
     fun changeBase(cell: Cell) {
-        cell.f += 1
         cell.base = when (cell.base){
             Base.GRASS -> Base.WATER
             Base.WATER -> Base.STONE
