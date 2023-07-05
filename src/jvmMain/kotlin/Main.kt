@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -21,43 +22,36 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 
-/* Это база :)*/
 enum class Base {
     Grass,
     Water,
     Stone
 }
 
-/* Это я не знаю что */
 enum class Function {
     Simple,
     Start,
     Finish
 }
 
-/* Состояния */
 enum class State {
     Simple,
     InOpenList,
     InClosedList
 }
 
-/* Окна */
-enum class WindowTypes {
-    Initialization,
-    Algorithm
-}
-
 class CellView {
+    private val colors = longArrayOf( 0xff649500, 0xff87cefa, 0xff696969 )
+    private val nameCells = listOf("Клетка травы", "Клетка воды", "Клетка камня")
     @Composable
     fun makeBox (cell: Cell) {
         Box (
             modifier = Modifier
-                .padding(1.dp)
-                .aspectRatio(1f)
-                .background(Color(getColor(cell.type)))
+                .padding(all = 1.dp)
+                .aspectRatio(ratio = 1f)
+                .background(color = Color(getColor(cell.type)))
                 .clickable {
-                    /* Здесь вызывается changeBase */
+                           /* Меняется */
                 },
             contentAlignment = Center
         ) {
@@ -67,12 +61,41 @@ class CellView {
             )
         }
     }
+
+    @Composable
+    fun screenInformationAboutTypes () {
+        Column {
+            for (i in (colors.indices)) {
+                Row (
+                    verticalAlignment = CenterVertically
+                ) {
+                    Box (
+                        modifier = Modifier
+                            .padding(all = 10.dp)
+                            .size(size = 95.dp)
+                            .background(color = Color.Black)
+                            .padding(all = 5.dp)
+                            .background(color = Color(color = colors[i]))
+                    ) {
+                    }
+                    Text (
+                        text = nameCells[i],
+                        modifier = Modifier
+                            .padding(all = 10.dp),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+    }
+
     fun getColor (type: Triple<Base, Function, State>): Long {
         var res: Long = 0x00000000
         res = when(type.first) {
-            Base.Grass -> 0xff649500
-            Base.Water -> 0xff87cefa
-            Base.Stone -> 0xff696969
+            Base.Grass -> colors[0]
+            Base.Water -> colors[1]
+            Base.Stone -> colors[2]
         }
 
         res += when(type.third) {
@@ -82,12 +105,7 @@ class CellView {
         }
         return res
     }
-    fun changeBase (type: Triple<Base, Function, State>) {
-        /* Здесь будет смена БАЗЫ после клика */
-    }
 }
-
-
 
 class Cell (
     var type: Triple<Base, Function, State> = Triple(Base.Grass, Function.Simple, State.Simple),
@@ -107,51 +125,32 @@ class FieldView {
     /* Метод рисования поля */
     @Composable
     fun drawField (x: Int, y: Int) {
-        Row {
-            /* Пространство слева */
-            Box (
-                modifier = Modifier
-                    .weight(1f) // цена
-                    .padding(16.dp)
-                    .fillMaxHeight()
-            ) {
-                val field = Array(x) { Cell() }
-                field[3].type = Triple(Base.Water, Function.Simple, State.Simple)
-                field[6].type = Triple(Base.Water, Function.Simple, State.Simple)
-                field[8].type = Triple(Base.Water, Function.Simple, State.Simple)
-                field[0].type = Triple(Base.Stone, Function.Simple, State.Simple)
-                val cellView = CellView()
-                LazyVerticalGrid (
-                    columns = GridCells.Fixed(y),
-                    content = {
-                        items(x) { i ->
-                            cellView.makeBox(field[i])
-                        }
-                    }
-                )
+        val field = Array(x) { Cell() }
+        field[3].type = Triple(Base.Water, Function.Simple, State.Simple)
+        field[6].type = Triple(Base.Water, Function.Simple, State.Simple)
+        field[8].type = Triple(Base.Water, Function.Simple, State.Simple)
+        field[0].type = Triple(Base.Stone, Function.Simple, State.Simple)
+        val cellView = CellView()
+        LazyVerticalGrid (
+            columns = GridCells.Fixed(y),
+            content = {
+                items(x) { i ->
+                    cellView.makeBox(field[i])
+                }
             }
-            /* Пространство справа */
-            Box(
-                modifier = Modifier
-                    .weight(0.5f) // цена
-                    .background(Color.LightGray) // цвет
-                    .fillMaxHeight()
-            ) {
-
-            }
-        }
+        )
     }
 }
 
 /* На будущее */
 class Controller {
-    var x by mutableStateOf(0)
-    var y by mutableStateOf(0)
+    private var x by mutableStateOf(0)
+    private var y by mutableStateOf(0)
     var flagToAlgorithm by mutableStateOf(false)
     private var blockInputs by mutableStateOf(true)
     @Composable
     fun userInputCord () {
-        Surface(
+        Surface (
             color = MaterialTheme.colors.background
         ) {
             Column (
@@ -180,7 +179,7 @@ class Controller {
                     placeholder = { Text(text = "Введите данные") },
                     singleLine = true,
                     trailingIcon = {
-                        if (isVisibleX) {
+                        if (isVisibleX && blockInputs) {
                             IconButton (
                                 onClick = { inputValueX = "" }
                             ) {
@@ -209,7 +208,7 @@ class Controller {
                     placeholder = { Text(text = "Введите данные") },
                     singleLine = true,
                     trailingIcon = {
-                        if (isVisibleY) {
+                        if (isVisibleY && blockInputs) {
                             IconButton (
                                 onClick = { inputValueY = "" }
                             ) {
@@ -250,34 +249,65 @@ class Controller {
                     fontWeight = FontWeight.Bold,
                     fontSize = 15.sp
                 )
-                Text (
-                    text = "$flagToAlgorithm",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp
-                )
             }
         }
     }
+
+    @Composable
+    fun algorithmScreen() {
+        Row {
+            /* Пространство слева */
+            Box (
+                modifier = Modifier
+                    .weight(1f) // цена
+                    .padding(16.dp)
+                    .fillMaxHeight()
+            ) {
+                val fieldView = FieldView()
+                fieldView.drawField(x, y)
+            }
+            /* Пространство справа */
+            Box (
+                modifier = Modifier
+                    .weight(0.3f) // цена
+                    .background(color = Color.LightGray) // цвет
+                    .fillMaxHeight()
+            ) {
+                val cellView = CellView()
+                cellView.screenInformationAboutTypes()
+            }
+        }
+    }
+
+    @Composable
+    fun setStart() {
+        /* Установка Start */
+    }
+
+    @Composable
+    fun setFinish() {
+        /* Установка Finish */
+    }
 }
+
 fun main() = application {
     val controller = Controller()
-    val fieldView = FieldView()
     Window (
         title = "Algorithm A*",
         onCloseRequest = ::exitApplication,
         state = WindowState(
-            size = DpSize(1600.dp, 900.dp) // размеры экрана
+            size = DpSize(1600.dp, 900.dp)
         )
     ) {
         if (controller.flagToAlgorithm) {
-            fieldView.drawField(controller.x, controller.y)
+            controller.algorithmScreen()
         }
     }
     Window (
         title = "Initialization",
         onCloseRequest = ::exitApplication,
         state = WindowState(
-            size = DpSize(600.dp, 500.dp) // размеры экрана
+            size = DpSize(600.dp, 500.dp)
         ),
         resizable = false
     ) {
