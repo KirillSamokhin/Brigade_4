@@ -1,7 +1,23 @@
 val scan = java.util.Scanner(System.`in`)
+
 fun main(args: Array<String>){
-    val test = Heap()
-    test.put(Cell(x=0, y=0, f = 30, g = 20, h = 10))
-    test.put(Cell(x=1, y=0, f = 20, g = 10, h = 10))
-    println(test.queue[1].f)
+    val test: Field = Field(4, 3)
+    for(i in 0..2){
+        for(j in 0..3){
+            var c = scan.next()
+            when(c){
+                "G" -> test.field[i][j].base = Base.GRASS
+                "M" -> test.field[i][j].base = Base.STONE
+                "W" -> test.field[i][j].base = Base.WATER
+                "S" -> test.field[i][j].edge = Edge.START
+                "F" -> test.field[i][j].edge = Edge.FINISH
+            }
+        }
+    }
+    val al = Algorythm(test)
+    val roots = al.Astar(0, 1, 3, 2)
+    val ans = al.recoverPath(roots, test.field[2][3])
+    for(i in ans){
+        println("${i.x} ${i.y}")
+    }
 }

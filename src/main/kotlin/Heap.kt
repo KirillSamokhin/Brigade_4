@@ -1,7 +1,7 @@
 class Heap(){
     var queue = emptyList<Cell>().toMutableList()
 
-    fun sift_up(index: Int){
+    fun siftUp(index: Int){
         if(index < 0 || index >= this.queue.size){
             return
         }
@@ -17,7 +17,7 @@ class Heap(){
         }
     }
 
-    fun sift_down(index: Int){
+    fun siftDown(index: Int){
         if (index < 0 || index >= this.queue.size) {
             return
         }
@@ -41,17 +41,17 @@ class Heap(){
         }
     }
 
-    fun extract_min(): Cell{
+    fun extractMin(): Cell{
         val min_element = this.queue[0]
         this.queue[0] = this.queue[this.queue.size-1]
         this.queue.removeAt(this.queue.size - 1)
-        this.sift_down(0)
+        this.siftDown(0)
         return min_element
     }
 
     fun put(element: Cell){
         this.queue.add(element)
-        this.sift_up(this.size() - 1)
+        this.siftUp(this.size() - 1)
     }
 
     fun size(): Int{
