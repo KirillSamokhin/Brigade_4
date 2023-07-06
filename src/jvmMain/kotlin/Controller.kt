@@ -20,7 +20,6 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 
-
 class Controller {
     private var x by mutableStateOf(0)
     private var y by mutableStateOf(0)
@@ -111,10 +110,18 @@ class Controller {
                         flagToAlgorithm = true
                         blockInputs = false
                     },
-                    modifier = Modifier.padding(5.dp),
+                    modifier = Modifier.padding(all = 5.dp),
                     enabled = blockInputs
                 ) {
                     Text (text = "Отправить")
+                }
+                Button (
+                    onClick = {
+
+                    },
+                    modifier = Modifier.padding(all = 5.dp)
+                ) {
+                    Text (text = "Открыть файл")
                 }
             }
         }
@@ -206,7 +213,7 @@ class Controller {
                         }
                         Button (
                             onClick = {
-
+                                defaultSettings()
                             }
                         ) {
                             Text (text = "Заново")
@@ -215,6 +222,10 @@ class Controller {
                 }
             }
         }
+    }
+
+    fun defaultSettings () {
+        /* Настройки по дефолту */
     }
 }
 
