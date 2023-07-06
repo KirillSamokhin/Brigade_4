@@ -1,5 +1,3 @@
-
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -19,28 +17,25 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
-import view.CellView
-import view.FieldView
 
 
-/* На будущее */
 class Controller {
-    val fieldView = FieldView()
-    private var x by mutableStateOf(0)
-    private var y by mutableStateOf(0)
-    var flagToAlgorithm by mutableStateOf(false)
-    private var blockInputs by mutableStateOf(true)
-    private var flagToStart by mutableStateOf(true)
-    private var flagToFinish by mutableStateOf(true)
+    private val fieldView = FieldView()
+    private var x by mutableStateOf(value = 0)
+    private var y by mutableStateOf(value = 0)
+    var flagToAlgorithm by mutableStateOf(value = false)
+    private var blockInputs by mutableStateOf(value = true)
+    private var flagToStart by mutableStateOf(value = true)
+    private var flagToFinish by mutableStateOf(value = true)
 
-    /* Окно ввода */
     @Composable
     fun userInputCord () {
         Surface (
             color = MaterialTheme.colors.background
         ) {
             Column (
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -48,9 +43,10 @@ class Controller {
                     text = "Введите размеры поля",
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(5.dp)
+                    modifier = Modifier
+                        .padding(all = 5.dp)
                 )
-                var inputValueX by remember { mutableStateOf("") }
+                var inputValueX by remember { mutableStateOf(value = "") }
                 val isVisibleX by remember {
                     derivedStateOf {
                         inputValueX.isNotBlank()
@@ -60,14 +56,20 @@ class Controller {
                     value = inputValueX,
                     onValueChange = { inputValueX = it },
                     modifier = Modifier
-                        .padding(5.dp),
-                    label = { Text(text = "Значение X") },
-                    placeholder = { Text(text = "Введите данные") },
+                        .padding(all = 5.dp),
+                    label = {
+                        Text (text = "Значение X")
+                    },
+                    placeholder = {
+                        Text (text = "Введите данные")
+                    },
                     singleLine = true,
                     trailingIcon = {
                         if (isVisibleX && blockInputs) {
                             IconButton (
-                                onClick = { inputValueX = "" }
+                                onClick = {
+                                    inputValueX = ""
+                                }
                             ) {
                                 Icon (
                                     imageVector = Icons.Default.Clear,
@@ -79,7 +81,7 @@ class Controller {
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     enabled = blockInputs
                 )
-                var inputValueY by remember { mutableStateOf("") }
+                var inputValueY by remember { mutableStateOf(value = "") }
                 val isVisibleY by remember {
                     derivedStateOf {
                         inputValueY.isNotBlank()
@@ -89,14 +91,20 @@ class Controller {
                     value = inputValueY,
                     onValueChange = { inputValueY = it },
                     modifier = Modifier
-                        .padding(5.dp),
-                    label = { Text(text = "Значение Y") },
-                    placeholder = { Text(text = "Введите данные") },
+                        .padding(all = 5.dp),
+                    label = {
+                        Text(text = "Значение Y")
+                    },
+                    placeholder = {
+                        Text(text = "Введите данные")
+                    },
                     singleLine = true,
                     trailingIcon = {
                         if (isVisibleY && blockInputs) {
                             IconButton (
-                                onClick = { inputValueY = "" }
+                                onClick = {
+                                    inputValueY = ""
+                                }
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Clear,
@@ -115,16 +123,19 @@ class Controller {
                         flagToAlgorithm = true
                         blockInputs = false
                     },
-                    modifier = Modifier.padding(all = 5.dp),
+                    modifier = Modifier
+                        .padding(all = 5.dp),
                     enabled = blockInputs
                 ) {
                     Text (text = "Отправить")
                 }
                 Button (
                     onClick = {
-
+                        /* Функция вставки из файла */
                     },
-                    modifier = Modifier.padding(all = 5.dp)
+                    modifier = Modifier
+                        .padding(all = 5.dp),
+                    enabled = blockInputs
                 ) {
                     Text (text = "Открыть файл")
                 }
@@ -132,16 +143,15 @@ class Controller {
         }
     }
 
-    /* Окно алгоритма */
     @Composable
-    fun algorithmScreen() {
+    fun algorithmScreen () {
         Row {
             val cellView = CellView()
             /* Пространство слева */
             Box (
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(16.dp)
+                    .weight(weight = 1f)
+                    .padding(all = 16.dp)
                     .fillMaxHeight()
             ) {
                 fieldView.drawField(x, y, cellView)
@@ -149,7 +159,7 @@ class Controller {
             /* Пространство справа */
             Box (
                 modifier = Modifier
-                    .weight(0.3f)
+                    .weight(weight = 0.3f)
                     .background(color = Color.LightGray)
                     .fillMaxHeight()
             ) {
@@ -158,7 +168,7 @@ class Controller {
                     Row (
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Box(
+                        Box (
                             modifier = Modifier
                                 .padding(all = 10.dp)
                                 .size(size = 95.dp)
@@ -169,7 +179,7 @@ class Controller {
                                         cellView.cellStart()
                                     }
                                 }
-                        ) { }
+                        )
                         Text(
                             text = "Клетка начала",
                             modifier = Modifier
@@ -192,7 +202,7 @@ class Controller {
                                         cellView.cellFinish()
                                     }
                                 }
-                        ) { }
+                        )
                         Text (
                             text = "Клетка финиша",
                             modifier = Modifier
@@ -204,13 +214,13 @@ class Controller {
                     Row (
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(10.dp),
+                            .padding(all = 10.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceAround,
                     ) {
                         Button (
                             onClick = {
-
+                                /* Функция начала алгоритма А* */
                             }
                         ) {
                             Text (text = "Начать")
@@ -220,7 +230,7 @@ class Controller {
                                 defaultSettings()
                             }
                         ) {
-                            Text (text = "Заново")
+                            Text (text = "Сброс")
                         }
                     }
                 }
@@ -228,11 +238,10 @@ class Controller {
         }
     }
 
-    fun defaultSettings () {
+    private fun defaultSettings () {
         flagToFinish = true
         flagToStart = true
         fieldView.field.defaultSettings()
-        /* Настройки по дефолту */
     }
 }
 
@@ -242,7 +251,7 @@ fun main() = application {
         title = "Algorithm A*",
         onCloseRequest = ::exitApplication,
         state = WindowState(
-            size = DpSize(1600.dp, 900.dp)
+            size = DpSize(width = 1600.dp, height = 900.dp)
         )
     ) {
         if (controller.flagToAlgorithm) {
@@ -253,7 +262,7 @@ fun main() = application {
         title = "Initialization",
         onCloseRequest = ::exitApplication,
         state = WindowState(
-            size = DpSize(600.dp, 500.dp)
+            size = DpSize(width = 600.dp, height = 500.dp)
         ),
         resizable = false
     ) {

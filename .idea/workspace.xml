@@ -5,8 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3ca84f2-0605-402b-bc27-e7459d800ab8" name="Changes" comment="a2">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Prototype1_jvm_1_0_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/demo1_jvm_1_0_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/demo1_jvm_1_0_SNAPSHOT.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid12736.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid15772.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hs_err_pid8740.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell_Field_Astar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell_Field_Astar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/View.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/View.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +34,7 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="demo1" type="f1a62948:ProjectNode" />
+                <item name="AllProject1" type="f1a62948:ProjectNode" />
               </path>
             </expand>
             <select />
@@ -43,6 +51,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Interface" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
@@ -54,13 +67,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Полина/IdeaProjects/demo1/src/jvmMain/kotlin&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "all__project",
+    "last_opened_file_path": "C:/Users/Полина/IdeaProjects/demo1/src/jvmMain/kotlin"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Полина\IdeaProjects\demo1\src\jvmMain\kotlin" />
@@ -77,6 +92,19 @@
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="view.MainKt" />
       <module name="demo1.jvmMain" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="demo1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="demo1" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
