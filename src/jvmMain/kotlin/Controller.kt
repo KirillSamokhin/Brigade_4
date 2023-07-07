@@ -1,3 +1,5 @@
+
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,25 +19,26 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
+import view.CellView
+import view.FieldView
 
 
+/* На будущее */
 class Controller {
-    private val fieldView = FieldView()
-    private var x by mutableStateOf(value = 0)
-    private var y by mutableStateOf(value = 0)
-    var flagToAlgorithm by mutableStateOf(value = false)
-    private var blockInputs by mutableStateOf(value = true)
-    private var flagToStart by mutableStateOf(value = true)
-    private var flagToFinish by mutableStateOf(value = true)
+    val fieldView = FieldView()
+    private var x by mutableStateOf(0)
+    private var y by mutableStateOf(0)
+    var flagToAlgorithm by mutableStateOf(false)
+    private var blockInputs by mutableStateOf(true)
 
+    /* Окно ввода */
     @Composable
     fun userInputCord () {
         Surface (
             color = MaterialTheme.colors.background
         ) {
             Column (
-                modifier = Modifier
-                    .fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -43,10 +46,9 @@ class Controller {
                     text = "Введите размеры поля",
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(all = 5.dp)
+                    modifier = Modifier.padding(5.dp)
                 )
-                var inputValueX by remember { mutableStateOf(value = "") }
+                var inputValueX by remember { mutableStateOf("") }
                 val isVisibleX by remember {
                     derivedStateOf {
                         inputValueX.isNotBlank()
@@ -56,20 +58,14 @@ class Controller {
                     value = inputValueX,
                     onValueChange = { inputValueX = it },
                     modifier = Modifier
-                        .padding(all = 5.dp),
-                    label = {
-                        Text (text = "Значение X")
-                    },
-                    placeholder = {
-                        Text (text = "Введите данные")
-                    },
+                        .padding(5.dp),
+                    label = { Text(text = "Значение X") },
+                    placeholder = { Text(text = "Введите данные") },
                     singleLine = true,
                     trailingIcon = {
                         if (isVisibleX && blockInputs) {
                             IconButton (
-                                onClick = {
-                                    inputValueX = ""
-                                }
+                                onClick = { inputValueX = "" }
                             ) {
                                 Icon (
                                     imageVector = Icons.Default.Clear,
@@ -81,7 +77,7 @@ class Controller {
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     enabled = blockInputs
                 )
-                var inputValueY by remember { mutableStateOf(value = "") }
+                var inputValueY by remember { mutableStateOf("") }
                 val isVisibleY by remember {
                     derivedStateOf {
                         inputValueY.isNotBlank()
@@ -91,20 +87,14 @@ class Controller {
                     value = inputValueY,
                     onValueChange = { inputValueY = it },
                     modifier = Modifier
-                        .padding(all = 5.dp),
-                    label = {
-                        Text(text = "Значение Y")
-                    },
-                    placeholder = {
-                        Text(text = "Введите данные")
-                    },
+                        .padding(5.dp),
+                    label = { Text(text = "Значение Y") },
+                    placeholder = { Text(text = "Введите данные") },
                     singleLine = true,
                     trailingIcon = {
                         if (isVisibleY && blockInputs) {
                             IconButton (
-                                onClick = {
-                                    inputValueY = ""
-                                }
+                                onClick = { inputValueY = "" }
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Clear,
@@ -123,19 +113,16 @@ class Controller {
                         flagToAlgorithm = true
                         blockInputs = false
                     },
-                    modifier = Modifier
-                        .padding(all = 5.dp),
+                    modifier = Modifier.padding(all = 5.dp),
                     enabled = blockInputs
                 ) {
                     Text (text = "Отправить")
                 }
                 Button (
                     onClick = {
-                        /* Функция вставки из файла */
+
                     },
-                    modifier = Modifier
-                        .padding(all = 5.dp),
-                    enabled = blockInputs
+                    modifier = Modifier.padding(all = 5.dp)
                 ) {
                     Text (text = "Открыть файл")
                 }
@@ -143,15 +130,16 @@ class Controller {
         }
     }
 
+    /* Окно алгоритма */
     @Composable
-    fun algorithmScreen () {
+    fun algorithmScreen() {
         Row {
             val cellView = CellView()
             /* Пространство слева */
             Box (
                 modifier = Modifier
-                    .weight(weight = 1f)
-                    .padding(all = 16.dp)
+                    .weight(1f)
+                    .padding(16.dp)
                     .fillMaxHeight()
             ) {
                 fieldView.drawField(x, y, cellView)
@@ -159,7 +147,7 @@ class Controller {
             /* Пространство справа */
             Box (
                 modifier = Modifier
-                    .weight(weight = 0.3f)
+                    .weight(0.3f)
                     .background(color = Color.LightGray)
                     .fillMaxHeight()
             ) {
@@ -168,18 +156,15 @@ class Controller {
                     Row (
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Box (
+                        Box(
                             modifier = Modifier
                                 .padding(all = 10.dp)
                                 .size(size = 95.dp)
                                 .background(color = Color.Blue)
                                 .clickable {
-                                    if (flagToStart) {
-                                        flagToStart = false
-                                        cellView.cellStart()
-                                    }
+                                    cellView.cellEdge("START")
                                 }
-                        )
+                        ) { }
                         Text(
                             text = "Клетка начала",
                             modifier = Modifier
@@ -197,12 +182,9 @@ class Controller {
                                 .size(size = 95.dp)
                                 .background(color = Color.Yellow)
                                 .clickable {
-                                    if (flagToFinish) {
-                                        flagToFinish = false
-                                        cellView.cellFinish()
-                                    }
+                                    cellView.cellEdge("FINISH")
                                 }
-                        )
+                        ) { }
                         Text (
                             text = "Клетка финиша",
                             modifier = Modifier
@@ -214,23 +196,24 @@ class Controller {
                     Row (
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(all = 10.dp),
+                            .padding(10.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceAround,
                     ) {
                         Button (
                             onClick = {
-                                /* Функция начала алгоритма А* */
+
                             }
                         ) {
                             Text (text = "Начать")
                         }
                         Button (
                             onClick = {
+                                cellView.default()
                                 defaultSettings()
                             }
                         ) {
-                            Text (text = "Сброс")
+                            Text (text = "Заново")
                         }
                     }
                 }
@@ -238,10 +221,9 @@ class Controller {
         }
     }
 
-    private fun defaultSettings () {
-        flagToFinish = true
-        flagToStart = true
+    fun defaultSettings () {
         fieldView.field.defaultSettings()
+        /* Настройки по дефолту */
     }
 }
 
@@ -251,7 +233,7 @@ fun main() = application {
         title = "Algorithm A*",
         onCloseRequest = ::exitApplication,
         state = WindowState(
-            size = DpSize(width = 1600.dp, height = 900.dp)
+            size = DpSize(1600.dp, 900.dp)
         )
     ) {
         if (controller.flagToAlgorithm) {
@@ -262,7 +244,7 @@ fun main() = application {
         title = "Initialization",
         onCloseRequest = ::exitApplication,
         state = WindowState(
-            size = DpSize(width = 600.dp, height = 500.dp)
+            size = DpSize(600.dp, 500.dp)
         ),
         resizable = false
     ) {
