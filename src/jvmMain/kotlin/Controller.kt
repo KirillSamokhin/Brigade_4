@@ -17,13 +17,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
+import javax.swing.JFileChooser
 
 
 class Controller {
     private val cellView = CellView()
     private val fieldView = FieldView()
-    private var x by mutableStateOf(value = 0)
-    private var y by mutableStateOf(value = 0)
     var flagToAlgorithm by mutableStateOf(value = false)
     var flagToStartAlgorithm by mutableStateOf(value = true)
     private var flagToBlockInputs by mutableStateOf(value = true)
@@ -51,6 +50,7 @@ class Controller {
                         inputValueY.isNotBlank()
                     }
                 }
+                var selectedFileName by remember { mutableStateOf("") }
                 Text (
                     text = "Введите размеры поля",
                     fontSize = 30.sp,
@@ -106,8 +106,8 @@ class Controller {
                 )
                 Button (
                     onClick = {
-                        x = inputValueX.toIntOrNull() ?: 0
-                        y = inputValueY.toIntOrNull() ?: 0
+                        fieldView.field.x = inputValueX.toIntOrNull() ?: 0
+                        fieldView.field.y = inputValueY.toIntOrNull() ?: 0
                         flagToAlgorithm = true
                         flagToBlockInputs = false
                     },
@@ -119,10 +119,21 @@ class Controller {
                 }
                 Button (
                     onClick = {
-                        /* Работа с файлами */
+                        val fileChooser = JFileChooser()
+                        fileChooser.dialogTitle = "Выберете файл"
+                        val result = fileChooser.showOpenDialog(null)
+                        if (result == JFileChooser.APPROVE_OPTION) {
+                            val selectedFile = fileChooser.selectedFile
+                            selectedFileName = selectedFile.path
+                        }
+                        val fileReader = FileReader(selectedFileName)
+                        fieldView.field = fileReader.readMap()
+                        flagToBlockInputs = false
+                        flagToAlgorithm = true
                     },
                     modifier = Modifier
-                        .padding(all = 5.dp)
+                        .padding(all = 5.dp),
+                    enabled = flagToBlockInputs
                 ) {
                     Text (text = "Открыть файл")
                 }
@@ -139,7 +150,7 @@ class Controller {
                     .padding(all = 16.dp)
                     .fillMaxHeight()
             ) {
-                fieldView.drawField(x, y, cellView)
+                fieldView.drawField(fieldView.field.x, fieldView.field.y, cellView)
             }
             /* Пространство справа */
             Box (
@@ -217,7 +228,7 @@ class Controller {
                                 defaultSettings()
                             }
                         ) {
-                            Text (text = "Заново")
+                            Text (text = "Сброс")
                         }
                     }
                 }
@@ -235,7 +246,7 @@ fun main() = application {
     Window (
         title = "Algorithm A*",
         onCloseRequest = ::exitApplication,
-        state = WindowState(
+        state = WindowState (
             size = DpSize(1600.dp, 900.dp)
         )
     ) {
@@ -246,7 +257,7 @@ fun main() = application {
     Window (
         title = "Initialization",
         onCloseRequest = ::exitApplication,
-        state = WindowState(
+        state = WindowState (
             size = DpSize(600.dp, 500.dp)
         ),
         resizable = false

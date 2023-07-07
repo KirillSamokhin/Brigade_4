@@ -175,7 +175,7 @@ class FieldView {
                     .fillMaxHeight()
             ) {
                 MaterialTheme {
-                    field = Field(x, y)
+                    field = Field(x, y) // <-- Исправить
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(x),
                         content = {
