@@ -16,19 +16,13 @@ import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 
 
-class CellView{
+class CellView {
     private val colors = longArrayOf( 0xff649500, 0xff87cefa, 0xff696969 )
-    private val nameCells = listOf("Клетка травы", "Клетка воды", "Клетка камня")
+    private val nameCells = listOf( "Клетка травы", "Клетка воды", "Клетка камня" )
     private var start = false
     private var finish = false
-
-    fun cellStart () {
-        start = true
-    }
-
-    fun cellFinish () {
-        finish = true
-    }
+    var cellStart: Cell? = null
+    var cellFinish: Cell? = null
 
     @Composable
     fun makeBox (cell: Cell) {
@@ -40,49 +34,47 @@ class CellView{
                 .clickable {
                     when {
                         start -> {
+                            cellStart?.changeEdge("NONE")
                             cell.changeEdge("START")
+                            cellStart = cell
                             start = false
                         }
                         finish -> {
+                            cellFinish?.changeEdge("NONE")
                             cell.changeEdge("FINISH")
+                            cellFinish = cell
                             finish = false
                         }
                         else -> cell.changeBase()
                     }
-            },
+                },
             contentAlignment = Alignment.Center,
         ) {
             val size = min(maxWidth, maxHeight) * 0.3f
-
-            when (cell.edge) {
+            when(cell.edge){
                 Edge.START -> Box (
                     modifier = Modifier
                         .size(width = size, height = size)
-                        .background(color = Color.Blue)
-                )
+                        .background(color = Color.Blue))
                 Edge.FINISH -> Box (
                     modifier = Modifier
                         .size(width = size, height = size)
                         .background(color = Color.Yellow))
                 else -> { }
             }
-            Text (
-                text = " " + cell.g.toString(),
+            Text (text = " " + cell.g.toString(),
                 color = Color(color = 0xff08086b),
-                fontSize = LocalDensity.current.run { size.toSp() },
+                fontSize = LocalDensity.current.run{ size.toSp() },
                 modifier = Modifier
                     .align(Alignment.TopStart)
             )
-            Text (
-                text = cell.h.toString() + " ",
+            Text (text = " " + cell.h.toString(),
                 color = Color(color = 0xff6b0505),
-                fontSize = LocalDensity.current.run { size.toSp() },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-            )
-            Text (
-                text=" " + cell.f.toString(),
-                fontSize = LocalDensity.current.run { size.toSp() },
+                fontSize = LocalDensity.current.run{ size.toSp() },
+                modifier = Modifier.align(Alignment.CenterStart))
+
+            Text (text = " " + cell.f.toString(),
+                fontSize = LocalDensity.current.run{ size.toSp() },
                 modifier = Modifier
                     .align(Alignment.BottomStart)
             )
@@ -117,20 +109,44 @@ class CellView{
         }
     }
 
+    fun cellEdge (edge: String) {
+        when(edge){
+            "START" -> {
+                start = true
+                finish = false
+            }
+            "FINISH" -> {
+                start = false
+                finish = true
+            }
+        }
+    }
+
+    fun default(){
+        cellStart = null
+        cellFinish = null
+        start = false
+        finish = false
+
+    }
+
     private fun getColor (cell: Cell): Color {
-        val res: Long = when(cell.base) {
+        val res: Long = when(cell.base){
             Base.GRASS -> 0xff689808
             Base.WATER -> 0xff88cffb
             Base.STONE -> 0xff696969
         }
-        var cur = Color(color = res)
-        val average = (cur.red + cur.green + cur.blue) / 3
-        cur = when(cell.status) {
+        var cur = Color(res)
+        val average = (cur.red + cur.green + cur.blue)/3
+        cur = when(cell.status){
             Status.CHECK -> {
                 changeColor(average, 3, 0.1.toFloat(), cur)
             }
             Status.VIEWED -> {
                 changeColor(average, 2, 0.15.toFloat(), cur)
+            }
+            Status.PATH -> {
+                Color.Red
             }
             else -> cur
         }
@@ -138,10 +154,10 @@ class CellView{
     }
 
     private fun changeColor (average: Float, d: Int, coefficient: Float, cur: Color): Color {
-        val r = cur.red - (cur.red - average) / d - coefficient
-        val g = cur.green - (cur.green - average) / d - coefficient
-        val b = cur.blue - (cur.blue - average) / d - coefficient
-        return Color(red = r, green = g, blue = b)
+        val r = cur.red - (cur.red - average)/d - coefficient
+        val g = cur.green - (cur.green - average)/d - coefficient
+        val b = cur.blue - (cur.blue - average)/d - coefficient
+        return Color(r, g, b)
     }
 }
 
@@ -153,14 +169,14 @@ class FieldView {
         Row {
             Box (
                 modifier = Modifier
-                    .weight(weight = 1f) // цена
+                    .weight(weight = 1f)
                     .background(color = Color.Black)
                     .padding(all = 16.dp)
                     .fillMaxHeight()
             ) {
                 MaterialTheme {
                     field = Field(x, y)
-                    LazyVerticalGrid (
+                    LazyVerticalGrid(
                         columns = GridCells.Fixed(x),
                         content = {
                             items(count = x * y){ i ->

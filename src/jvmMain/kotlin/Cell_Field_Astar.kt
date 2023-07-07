@@ -3,12 +3,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlin.math.abs
 
-
 enum class Status {
     NOTVIEWED,
     VIEWED,
     CHECK,
-    INPATH
+    PATH
 }
 
 enum class Base {
@@ -30,9 +29,9 @@ class Cell {
     var f by mutableStateOf(value = 0)
     var g by mutableStateOf(value = -1)
     var h by mutableStateOf(value = 0)
-    var parent: Pair<Int, Int> = Pair(-1, -1)
     var x: Int = 0
     var y: Int = 0
+    var parent: Pair<Int, Int> = Pair(-1, -1)
     fun setParams (g: Int, h: Int) {
         this.g = g
         this.h = h
@@ -40,7 +39,7 @@ class Cell {
     }
 
     fun getWeight(): Int {
-        return when (this.base) {
+        return when(this.base){
             Base.GRASS -> 10
             Base.WATER -> 30
             Base.STONE -> -1
@@ -48,7 +47,7 @@ class Cell {
     }
 
     fun changeBase(){
-        base = when (base) {
+        base = when (base){
             Base.GRASS -> Base.WATER
             Base.WATER -> Base.STONE
             Base.STONE -> Base.GRASS
@@ -57,31 +56,43 @@ class Cell {
 
     fun changeEdge (string: String) {
         edge = when (string) {
-            "START" -> Edge.START
-            "FINISH" -> Edge.FINISH
-            else -> Edge.NONE
+            "START" -> {
+                this.g = 0
+                Edge.START
+            }
+            "FINISH" -> {
+                Edge.FINISH
+            }
+            else -> {
+                this.g = -1
+                Edge.NONE
+            }
         }
     }
 }
 
 
 class Field (val x: Int, val y: Int) {
-    val field = Array(this.y){Array<Cell>(this.x){ Cell() }}
+    val field = Array(this.y){Array(this.x){ Cell() }}
 
-    init{
-        for(i in 0 until y){
-            for(j in 0 until x){
+    init {
+        for (i in 0 until y) {
+            for (j in 0 until x) {
                 this.field[i][j].x = j
                 this.field[i][j].y = i
             }
         }
     }
 
-    fun defaultSettings () {
+    fun default () {
         field.forEach { it ->
             it.forEach {
+                it.g = -1
+                it.h = 0
+                it.f = 0
+                it.status = Status.NOTVIEWED
                 it.base = Base.GRASS
-                it.changeEdge(string = "NONE")
+                it.edge = Edge.NONE
             }
         }
     }
@@ -102,7 +113,7 @@ class Heap {
             this.queue[tmpIndex] = tmp
             val buf = tmpIndex
             tmpIndex = parent
-            parent = (buf - 1) / 2
+            parent = (buf-1)/2
         }
     }
 
@@ -119,7 +130,7 @@ class Heap {
             right = 2 * tmpIndex + 2
             if (right < this.queue.size && this.queue[right].f < this.queue[minIndex].f)
                 minIndex = right
-            if (left < this.queue.size && this.queue[left].f < this.queue[minIndex].f)
+            if( left < this.queue.size && this.queue[left].f < this.queue[minIndex].f)
                 minIndex = left
             if (minIndex == tmpIndex)
                 return
@@ -132,15 +143,15 @@ class Heap {
 
     fun extractMin (): Cell {
         val minElement = this.queue[0]
-        this.queue[0] = this.queue[this.queue.size - 1]
-        this.queue.removeAt(index = this.queue.size - 1)
-        this.siftDown(index = 0)
+        this.queue[0] = this.queue[this.queue.size-1]
+        this.queue.removeAt(this.queue.size - 1)
+        this.siftDown(0)
         return minElement
     }
 
     fun put (element: Cell) {
         this.queue.add(element)
-        this.siftUp(index = this.size() - 1)
+        this.siftUp(this.size() - 1)
     }
 
     fun size (): Int {
@@ -151,10 +162,10 @@ class Heap {
 
 class Algorithm (private var field: Field) {
     private fun heuristic (x: Int, y: Int, fx: Int, fy: Int): Int {
-        return 20 * (abs(n = fx - x) + abs(n = fy - y))
+        return 20 * (abs(fx-x) + abs(fy-y))
     }
 
-    private fun cellProcess(x: Int, y: Int, queue: Heap, roots: MutableMap<Cell, Cell?>, parent: Cell, fx: Int, fy: Int) {
+    private fun cellProcess (x: Int, y: Int, queue: Heap, roots: MutableMap<Cell, Cell?>, parent: Cell, fx: Int, fy: Int) {
         if (x < 0 || y < 0 || x >= this.field.x || y >= this.field.y) {
             return
         }
@@ -166,7 +177,7 @@ class Algorithm (private var field: Field) {
         if (node.g == -1 || node.g > tempDist) {
             roots[node] = parent
             node.setParams(tempDist, heuristic(x, y, fx, fy))
-            node.parent = Pair<Int, Int>(parent.x, parent.y)
+            node.parent = Pair(parent.x, parent.y)
             node.status = Status.CHECK
             queue.put(node)
         }
@@ -193,14 +204,11 @@ class Algorithm (private var field: Field) {
         return roots
     }
 
-    fun recoverPath (roots: MutableMap<Cell, Cell?>, end: Cell): MutableList<Cell> {
-        val path = emptyList<Cell>().toMutableList()
+    fun recoverPath (roots: MutableMap<Cell, Cell?>, end: Cell) {
         var curr: Cell? = end
-        while (curr != null) {
-            path.add(curr)
+        while(curr != null){
+            curr.status = Status.PATH
             curr = roots[curr]
         }
-        path.reverse()
-        return path
     }
 }
