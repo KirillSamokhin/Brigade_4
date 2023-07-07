@@ -1,8 +1,3 @@
-
-
-package view
-
-import CellField.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -59,19 +54,18 @@ class CellView{
                 .background(get_color(cell))
                 .clickable{
                     when {
+
                         start -> {
                             cell_start?.changeEdge("NONE")
                             cell.changeEdge("START")
                             cell_start = cell
                             start = false
-                            //start_coord = Pair(cell.x, cell.y)
                         }
                         finish -> {
                             cell_finish?.changeEdge("NONE")
                             cell.changeEdge("FINISH")
                             cell_finish = cell
                             finish = false
-                            //finish_coord = Pair(cell.x, cell.y)
                         }
                         else -> cell.changeBase()
                     }
@@ -91,10 +85,11 @@ class CellView{
                 fontSize = LocalDensity.current.run{size.toSp()},
                 modifier = Modifier.align(Alignment.TopStart))
 
-            Text(text= cell.h.toString() + " ",
+            Text(text= " " + cell.h.toString(),
                 color=Color(0xff6b0505),
                 fontSize = LocalDensity.current.run{size.toSp()},
-                modifier = Modifier.align(Alignment.TopEnd))
+                modifier = Modifier.align(Alignment.CenterStart))
+
             Text(text=" " + cell.f.toString(),
                 fontSize = LocalDensity.current.run{size.toSp()},
                 modifier = Modifier.align(Alignment.BottomStart))
@@ -146,6 +141,9 @@ class CellView{
             }
             Status.VIEWED -> {
                 change_color(average, 2, 0.15.toFloat(), cur)
+            }
+            Status.INPATH -> {
+                Color.Red
             }
             else -> cur
         }

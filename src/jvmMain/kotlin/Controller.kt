@@ -1,5 +1,4 @@
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -19,8 +18,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
-import view.CellView
-import view.FieldView
 
 
 /* На будущее */
@@ -29,6 +26,7 @@ class Controller {
     private var x by mutableStateOf(0)
     private var y by mutableStateOf(0)
     var flagToAlgorithm by mutableStateOf(false)
+    var StartAlgorithm by mutableStateOf(true)
     private var blockInputs by mutableStateOf(true)
 
     /* Окно ввода */
@@ -202,8 +200,18 @@ class Controller {
                     ) {
                         Button (
                             onClick = {
+                                var algorythm = Algorythm(fieldView.field)
+                                if (cellView.cell_start==null || cellView.cell_finish==null){
+                                    print("Введите старт и финиш")
+                                }
+                                else{
+                                    val answer = algorythm.Astar(cellView.cell_start!!.x, cellView.cell_start!!.y, cellView.cell_finish!!.x, cellView.cell_finish!!.y)
+                                    algorythm.recoverPath(answer, cellView.cell_finish!!)
 
+                                }
+                                //StartAlgorithm = false
                             }
+                            //, enabled = StartAlgorithm
                         ) {
                             Text (text = "Начать")
                         }

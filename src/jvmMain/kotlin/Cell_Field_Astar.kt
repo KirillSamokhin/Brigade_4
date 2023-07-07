@@ -1,5 +1,3 @@
-package CellField
-
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -58,16 +56,24 @@ class Cell {
 
     fun changeEdge (string: String) {
         edge = when (string) {
-            "START" -> Edge.START
-            "FINISH" -> Edge.FINISH
-            else -> Edge.NONE
+            "START" -> {
+                this.g = 0
+                Edge.START
+            }
+            "FINISH" -> {
+                Edge.FINISH
+            }
+            else -> {
+                this.g = -1
+                Edge.NONE
+            }
         }
     }
 }
 
 
 class Field (val x: Int, val y: Int) {
-    val field = Array(this.y){Array<Cell>(this.x){Cell()}}
+    val field = Array(this.y){Array<Cell>(this.x){ Cell() }}
     init{
         for(i in 0 until y){
             for(j in 0 until x){
@@ -79,6 +85,10 @@ class Field (val x: Int, val y: Int) {
     fun defaultSettings(){
         field.forEach{
             it.forEach {
+                it.g = -1
+                it.h = 0
+                it.f = 0
+                it.status = Status.NOTVIEWED
                 it.base = Base.GRASS
                 it.changeEdge("NONE")
             }
@@ -129,7 +139,7 @@ class Heap(){
         }
     }
 
-    fun extractMin(): Cell{
+    fun extractMin(): Cell {
         val min_element = this.queue[0]
         this.queue[0] = this.queue[this.queue.size-1]
         this.queue.removeAt(this.queue.size - 1)
@@ -192,14 +202,11 @@ class Algorythm (var field: Field) {
         return roots
     }
 
-    fun recoverPath (roots: MutableMap<Cell, Cell?>, end: Cell): MutableList<Cell> {
-        var path = emptyList<Cell>().toMutableList()
+    fun recoverPath (roots: MutableMap<Cell, Cell?>, end: Cell){
         var curr: Cell? = end
         while(curr != null){
-            path.add(curr)
+            curr.status = Status.INPATH
             curr = roots[curr]
         }
-        path.reverse()
-        return path
     }
 }
