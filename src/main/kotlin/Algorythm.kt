@@ -9,7 +9,8 @@ class Algorythm(var field: Field){
         if(x < 0 || y < 0 || x >= this.field.x || y >= this.field.y){
             return
         }
-        if(this.field.field[y][x].base == Base.STONE || this.field.field[y][x].status == Status.VIEWED){
+        if(this.field.field[y][x].base == Base.STONE){
+            println("skip $x $y")
             return
         }
         val node = this.field.field[y][x]
@@ -20,6 +21,8 @@ class Algorythm(var field: Field){
             node.parent = Pair<Int, Int>(parent.x, parent.y)
             node.status = Status.CHECK
             queue.put(node)
+            Thread.sleep(1000)
+//            println("Iter: $x $y")
         }
     }
 
@@ -27,6 +30,7 @@ class Algorythm(var field: Field){
         var roots: MutableMap<Cell, Cell?> = mutableMapOf(field.field[sy][sx] to null)
         var queue = Heap()
         val end = field.field[fy][fx]
+        field.field[sy][sx].f = heuristic(sx, sy, fx, fy)
         queue.put(field.field[sy][sx])
         while(queue.size() != 0){
             val cur = queue.extractMin()
@@ -47,6 +51,10 @@ class Algorythm(var field: Field){
     fun recoverPath(roots: MutableMap<Cell, Cell?>, end: Cell): MutableList<Cell>{
         var path = emptyList<Cell>().toMutableList()
         var curr: Cell? = end
+        if(roots[end] == null){
+            println("Финиш недостижим!")
+            return path
+        }
         while(curr != null){
             path.add(curr)
             curr = roots[curr]

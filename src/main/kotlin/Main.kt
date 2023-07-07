@@ -1,22 +1,19 @@
 val scan = java.util.Scanner(System.`in`)
 
 fun main(args: Array<String>){
-    val test: Field = Field(4, 3)
-    for(i in 0..2){
-        for(j in 0..3){
-            var c = scan.next()
-            when(c){
-                "G" -> test.field[i][j].base = Base.GRASS
-                "M" -> test.field[i][j].base = Base.STONE
-                "W" -> test.field[i][j].base = Base.WATER
-                "S" -> test.field[i][j].edge = Edge.START
-                "F" -> test.field[i][j].edge = Edge.FINISH
-            }
-        }
-    }
+    val reader = FileReader()
+    val test: Field = reader.readMap()
+    var sx = 0
+    var sy = 0
+    var fx = 0
+    var fy = 0
+    sx = reader.readStart(test.x, test.y).first
+    sy = reader.readStart(test.x, test.y).second
+    fx = reader.readFinish(test.x, test.y).first
+    fy = reader.readFinish(test.x, test.y).second
     val al = Algorythm(test)
-    val roots = al.Astar(0, 1, 3, 2)
-    val ans = al.recoverPath(roots, test.field[2][3])
+    val roots = al.Astar(sx, sy, fx, fy)
+    val ans = al.recoverPath(roots, test.field[fy][fx])
     for(i in ans){
         println("${i.x} ${i.y}")
     }
