@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ca84f2-0605-402b-bc27-e7459d800ab8" name="Changes" comment="a2">
-      <change afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" afterDir="false" />
+    <list default="true" id="f3ca84f2-0605-402b-bc27-e7459d800ab8" name="Changes" comment="Пофиксить инициализацию поля в классе FieldView. Ввод с файла работает... наверно...">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell_Field_Astar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell_Field_Astar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/View.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/View.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +116,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688675310681</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Пофиксить инициализацию поля в классе FieldView. Ввод с файла работает... наверно...">
+      <option name="closed" value="true" />
+      <created>1688745487873</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1688745487873</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -147,6 +152,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="a" />
-    <option name="LAST_COMMIT_MESSAGE" value="a" />
+    <MESSAGE value="Пофиксить инициализацию поля в классе FieldView. Ввод с файла работает... наверно..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Пофиксить инициализацию поля в классе FieldView. Ввод с файла работает... наверно..." />
   </component>
 </project>

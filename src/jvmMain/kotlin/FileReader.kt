@@ -1,5 +1,6 @@
 import java.io.File
 
+
 class FileReader (file: String = "config.txt") {
     private val source = File(file)
 
