@@ -23,6 +23,7 @@ import javax.swing.JFileChooser
 class Controller {
     val singleton = Singleton.getInstance()
     private lateinit var field: Field
+    private lateinit var algorithm: Algorithm
     private val fieldView = FieldView()
     private val cellView = CellView()
     private var x by mutableStateOf(value = 0)
@@ -30,6 +31,8 @@ class Controller {
     private var flagToBlockInputs by mutableStateOf(value = true)
     private var flagToStartAlgorithm by mutableStateOf(value = true)
     var flagToAlgorithm by mutableStateOf(value = false)
+    private var flagToEndAlgorithm by mutableStateOf(value = true)
+    var count = 0
 
     @Composable
     fun userInputCord () {
@@ -218,14 +221,13 @@ class Controller {
                     ) {
                         Button (
                             onClick = {
-                                val algorithm = Algorithm(field)
+                                algorithm = Algorithm(field)
                                 field.startCord = Pair(cellView.cellStart?.x ?: 0, cellView.cellStart?.y ?: 0)
                                 field.finishCord = Pair(cellView.cellFinish?.x ?: (field.x-1), cellView.cellFinish?.y ?: (field.y-1))
 
-                                val answer = algorithm.Astar()
-                                algorithm.recoverPath(answer)
                                 cellView.clickable = false
                                 flagToStartAlgorithm = false
+                                algorithm.Astar()
 
                             },
                             enabled = flagToStartAlgorithm
@@ -234,9 +236,19 @@ class Controller {
                         }
                         Button (
                             onClick = {
-
+                                var answer:  MutableMap<Cell, Cell?>? = null
+                                when(count%5){
+                                    0 -> {answer = algorithm.iteration()}
+                                    1, 2, 3, 4 -> algorithm.cellProcess()
+                                }
+                                //val answer = algorithm.iteration()
+                                if (answer != null){
+                                    algorithm.recoverPath(answer)
+                                    flagToEndAlgorithm = false
+                                }
+                                count += 1
                             },
-                            enabled = !flagToStartAlgorithm
+                            enabled = !flagToStartAlgorithm && flagToEndAlgorithm
                         ) {
                             Text (text = "Далее")
                         }
