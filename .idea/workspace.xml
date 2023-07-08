@@ -4,22 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a52d59f7-911a-491f-a3ad-d3eaacfcb33e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Prototype1_jvm_1_0_SNAPSHOT.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" beforeDir="false" />
+    <list default="true" id="a52d59f7-911a-491f-a3ad-d3eaacfcb33e" name="Changes" comment="Создан класс Logger. Его методы вызываются в алгоритме и при установке старта/финиша.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Algorythm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Algorythm.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Field.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Field.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/FileReader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FileReader.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +38,19 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
   </component>
@@ -61,12 +63,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Кирилл/IdeaProjects/Brigade_4&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -75,8 +87,52 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1688389173344</updated>
+      <workItem from="1688556436151" duration="260000" />
+      <workItem from="1688556711966" duration="174000" />
+      <workItem from="1688556929201" duration="7460000" />
+      <workItem from="1688573484888" duration="41000" />
+      <workItem from="1688720480786" duration="12286000" />
+      <workItem from="1688806075469" duration="3048000" />
+      <workItem from="1688824405672" duration="320000" />
+      <workItem from="1688826648849" duration="1019000" />
     </task>
+    <task id="LOCAL-00001" summary="Algorithm 0">
+      <option name="closed" value="true" />
+      <created>1688556767292</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1688556767292</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Algorithm 1">
+      <option name="closed" value="true" />
+      <created>1688568068969</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1688568068969</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Добавлено чтение из файла, проверка достижимости финиша, задержка при проверке клеток и установка числовых характеристик старта.">
+      <option name="closed" value="true" />
+      <created>1688731565213</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1688731565213</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Создан класс Logger. Его методы вызываются в алгоритме и при установке старта/финиша.">
+      <option name="closed" value="true" />
+      <created>1688809077048</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688809077048</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -89,7 +145,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="Astar" />
                       </list>
                     </value>
                   </entry>
@@ -100,5 +156,12 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Algorithm 0" />
+    <MESSAGE value="Algorithm 1" />
+    <MESSAGE value="Добавлено чтение из файла, проверка достижимости финиша, задержка при проверке клеток и установка числовых характеристик старта." />
+    <MESSAGE value="Создан класс Logger. Его методы вызываются в алгоритме и при установке старта/финиша." />
+    <option name="LAST_COMMIT_MESSAGE" value="Создан класс Logger. Его методы вызываются в алгоритме и при установке старта/финиша." />
   </component>
 </project>
