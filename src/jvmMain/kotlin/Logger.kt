@@ -25,7 +25,7 @@ class Logger {
         singleton.message = "В клетке с координатами ($x, $y) расположен камень, переход невозможен."
     }
 
-    fun cellProc (cur: Cell) {
+    fun cellProcesses (cur: Cell) {
         singleton.message = "Вершина (${cur.x}, ${cur.y}) добавлена в очередь. Установлены следующие числовые характеристики:\n" +
                 "g = ${cur.g}\n" +
                 "h = ${cur.h}\n" +
@@ -34,14 +34,6 @@ class Logger {
 
     fun betterWay (cur: Cell) {
         singleton.message = "Найден более короткий путь до вершины (${cur.x}, ${cur.y}). Теперь g = ${cur.g}, а f = ${cur.f}."
-    }
-
-    fun viewPath(root: MutableList<Cell>){
-        println("\nИтоговый путь имеет вид:")
-        print("\t(${root[0].x}, ${root[0].y})")
-        for(i in 1 until root.size){
-            print(" -> (${root[i].x}, ${root[i].y})")
-        }
     }
 
     fun outOfBounds(x: Int, y: Int){

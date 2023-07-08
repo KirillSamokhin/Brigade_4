@@ -1,10 +1,11 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
-
 
 class CellView {
     private val colors = longArrayOf( 0xff649500, 0xff87cefa, 0xff696969 )
@@ -59,26 +59,45 @@ class CellView {
             when (cell.edge) {
                 Edge.START -> Box (
                     modifier = Modifier
-                        .size(width = size, height = size)
-                        .background(color = Color.Blue))
+                        .size(size = size)
+                ) {
+                    Icon (
+                        Icons.Default.Face,
+                        contentDescription = "Start icon",
+                        modifier = Modifier
+                            .size(size = size),
+                        tint = Color.Black,
+                    )
+                }
                 Edge.FINISH -> Box (
                     modifier = Modifier
-                        .size(width = size, height = size)
-                        .background(color = Color.Yellow))
+                        .size(size = size)
+                ) {
+                    Icon (
+                        Icons.Default.Home,
+                        contentDescription = "Finish icon",
+                        modifier = Modifier
+                            .size(size = size),
+                        tint = Color.Black,
+                    )
+                }
                 else -> { }
             }
-            Text (text = " " + cell.g.toString(),
+            Text (
+                text = " " + cell.g.toString(),
                 color = Color(color = 0xff08086b),
                 fontSize = LocalDensity.current.run{ size.toSp() },
                 modifier = Modifier
                     .align(Alignment.TopStart)
             )
-            Text (text = " " + cell.h.toString(),
+            Text (
+                text = " " + cell.h.toString(),
                 color = Color(color = 0xff6b0505),
                 fontSize = LocalDensity.current.run{ size.toSp() },
                 modifier = Modifier.align(Alignment.CenterStart))
 
-            Text (text = " " + cell.f.toString(),
+            Text (
+                text = " " + cell.f.toString(),
                 fontSize = LocalDensity.current.run{ size.toSp() },
                 modifier = Modifier
                     .align(Alignment.BottomStart)
@@ -101,6 +120,7 @@ class CellView {
                             .padding(all = 2.dp)
                             .background(color = Color(color = colors[i]))
                     ) {
+
                     }
                     Text (
                         text = nameCells[i],
@@ -164,31 +184,5 @@ class CellView {
         val g = cur.green - (cur.green - average)/d - coefficient
         val b = cur.blue - (cur.blue - average)/d - coefficient
         return Color(r, g, b)
-    }
-}
-
-class FieldView {
-
-    @Composable
-    fun drawField (field: Field, cellView: CellView) {
-        Row {
-            Box (
-                modifier = Modifier
-                    .background(color = Color.Black)
-                    .padding(all = 16.dp)
-                    .fillMaxHeight()
-            ) {
-                MaterialTheme {
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(field.x),
-                        content = {
-                            items(count = field.x * field.y){ i ->
-                                cellView.makeBox(field.field[i / field.x][i % field.x])
-                            }
-                        }
-                    )
-                }
-            }
-        }
     }
 }

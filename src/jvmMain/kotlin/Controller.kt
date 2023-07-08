@@ -1,3 +1,4 @@
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -5,36 +6,32 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.WindowState
-import androidx.compose.ui.window.application
 import javax.swing.JFileChooser
 
 
 class Controller {
-    val singleton = Singleton.getInstance()
+    private val singleton = Singleton.getInstance()
+    private val cellView = CellView()
+    private val fieldView = FieldView()
     private lateinit var field: Field
     private lateinit var algorithm: Algorithm
-    private val fieldView = FieldView()
-    private val cellView = CellView()
     private var x by mutableStateOf(value = 0)
     private var y by mutableStateOf(value = 0)
     private var flagToBlockInputs by mutableStateOf(value = true)
     private var flagToStartAlgorithm by mutableStateOf(value = true)
     var flagToAlgorithm by mutableStateOf(value = false)
     private var flagToEndAlgorithm by mutableStateOf(value = true)
-    private var flagAlgorithmStarted by mutableStateOf(value = true)
-    var count = 0
-
+    private var count = 0
 
     @Composable
     fun userInputCord () {
@@ -59,7 +56,7 @@ class Controller {
                         inputValueY.isNotBlank()
                     }
                 }
-                var selectedFileName by remember { mutableStateOf("") }
+                var selectedFileName by remember { mutableStateOf(value = "") }
                 Text (
                     text = "Введите размеры поля",
                     fontSize = 30.sp,
@@ -177,13 +174,24 @@ class Controller {
                             modifier = Modifier
                                 .padding(all = 10.dp)
                                 .size(size = 95.dp)
-                                .background(color = Color.Blue)
+                                .background(color = Color.Black)
+                                .padding(all = 2.dp)
+                                .background(color = Color.LightGray)
                                 .clickable {
                                     if (flagToStartAlgorithm) {
                                         cellView.cellEdge("START")
                                     }
                                 }
-                        ) { }
+                        ) {
+                            Icon (
+                                Icons.Default.Face,
+                                contentDescription = "Start icon",
+                                modifier = Modifier
+                                    .size(size = 50.dp)
+                                    .align(Alignment.Center),
+                                tint = Color.Black,
+                            )
+                        }
                         Text (
                             text = "Клетка начала",
                             modifier = Modifier
@@ -199,13 +207,24 @@ class Controller {
                             modifier = Modifier
                                 .padding(all = 10.dp)
                                 .size(size = 95.dp)
-                                .background(color = Color.Yellow)
+                                .background(color = Color.Black)
+                                .padding(all = 2.dp)
+                                .background(color = Color.LightGray)
                                 .clickable {
                                     if (flagToStartAlgorithm) {
                                         cellView.cellEdge("FINISH")
                                     }
                                 }
-                        ) { }
+                        ) {
+                            Icon (
+                                Icons.Default.Home,
+                                contentDescription = "Finish icon",
+                                modifier = Modifier
+                                    .size(size = 50.dp)
+                                    .align(Alignment.Center),
+                                tint = Color.Black,
+                            )
+                        }
                         Text (
                             text = "Клетка финиша",
                             modifier = Modifier
@@ -225,8 +244,13 @@ class Controller {
                             onClick = {
                                 algorithm = Algorithm(field)
                                 field.startCord = Pair(cellView.cellStart?.x ?: 0, cellView.cellStart?.y ?: 0)
-                                field.finishCord = Pair(cellView.cellFinish?.x ?: (field.x-1), cellView.cellFinish?.y ?: (field.y-1))
-
+                                if (field.startCord.first == 0 && field.startCord.second == 0) {
+                                    field.field[0][0].changeEdge("START")
+                                }
+                                field.finishCord = Pair(cellView.cellFinish?.x ?: (field.x - 1), cellView.cellFinish?.y ?: (field.y - 1))
+                                if (field.finishCord.first == field.x - 1 && field.finishCord.second == field.y - 1) {
+                                    field.field[field.y - 1][field.x - 1].changeEdge("FINISH")
+                                }
                                 cellView.clickable = false
                                 flagToStartAlgorithm = false
                                 algorithm.Astar()
@@ -239,12 +263,13 @@ class Controller {
                         Button (
                             onClick = {
                                 var answer:  MutableMap<Cell, Cell?>? = null
-                                when(count%5){
-                                    0 -> {answer = algorithm.iteration()}
+                                when (count % 5) {
+                                    0 -> {
+                                        answer = algorithm.iteration()
+                                    }
                                     1, 2, 3, 4 -> algorithm.cellProcess()
                                 }
-                                //val answer = algorithm.iteration()
-                                if (answer != null){
+                                if (answer != null) {
                                     algorithm.recoverPath(answer)
                                     flagToEndAlgorithm = false
                                 }
@@ -256,10 +281,7 @@ class Controller {
                         }
                         Button (
                             onClick = {
-                                cellView.default()
                                 defaultSettings()
-                                flagToStartAlgorithm = true
-                                flagToEndAlgorithm = true
                             }
                         ) {
                             Text (text = "Сброс")
@@ -270,7 +292,6 @@ class Controller {
                             .fillMaxWidth()
                             .padding(all = 10.dp),
                     ) {
-                        println(singleton.message)
                         Text (
                             text = singleton.message,
                             fontSize = 20.sp,
@@ -283,33 +304,11 @@ class Controller {
     }
 
     private fun defaultSettings () {
+        singleton.message = ""
         field.default()
+        cellView.default()
+        flagToStartAlgorithm = true
+        flagToEndAlgorithm = true
         count = 0
-
-    }
-}
-
-fun main() = application {
-    val controller = Controller()
-    Window (
-        title = "Algorithm A*",
-        onCloseRequest = ::exitApplication,
-        state = WindowState(
-            size = DpSize(1600.dp, 900.dp)
-        )
-    ) {
-        if (controller.flagToAlgorithm) {
-            controller.algorithmScreen()
-        }
-    }
-    Window (
-        title = "Initialization",
-        onCloseRequest = ::exitApplication,
-        state = WindowState (
-            size = DpSize(600.dp, 500.dp)
-        ),
-        resizable = false
-    ) {
-        controller.userInputCord()
     }
 }
