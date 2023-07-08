@@ -4,7 +4,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 
-fun main() = application {
+fun main () = application {
     val controller = Controller()
     Window (
         title = "Algorithm A*",

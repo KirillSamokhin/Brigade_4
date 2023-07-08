@@ -57,30 +57,20 @@ class CellView {
         ) {
             val size = min(maxWidth, maxHeight) * 0.3f
             when (cell.edge) {
-                Edge.START -> Box (
-                    modifier = Modifier
-                        .size(size = size)
-                ) {
-                    Icon (
+                Edge.START -> Icon (
                         Icons.Default.Face,
                         contentDescription = "Start icon",
                         modifier = Modifier
                             .size(size = size),
                         tint = Color.Black,
                     )
-                }
-                Edge.FINISH -> Box (
-                    modifier = Modifier
-                        .size(size = size)
-                ) {
-                    Icon (
+                Edge.FINISH -> Icon (
                         Icons.Default.Home,
                         contentDescription = "Finish icon",
                         modifier = Modifier
                             .size(size = size),
                         tint = Color.Black,
                     )
-                }
                 else -> { }
             }
             Text (

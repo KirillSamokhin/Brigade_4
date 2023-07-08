@@ -1,13 +1,10 @@
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,15 +26,37 @@ class Controller {
     private var y by mutableStateOf(value = 0)
     private var flagToBlockInputs by mutableStateOf(value = true)
     private var flagToStartAlgorithm by mutableStateOf(value = true)
-    var flagToAlgorithm by mutableStateOf(value = false)
     private var flagToEndAlgorithm by mutableStateOf(value = true)
     private var count = 0
+    var flagToAlgorithm by mutableStateOf(value = false)
 
     @Composable
     fun userInputCord () {
+        val showHelp = remember { mutableStateOf(value = false) }
+        if (showHelp.value) {
+            helpDialog (onDismiss = {showHelp.value = false})
+        }
         Surface (
             color = MaterialTheme.colors.background
         ) {
+            Box (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+                    .size(size = 30.dp),
+                contentAlignment = Alignment.TopEnd
+            ) {
+                Icon (
+                    Icons.Default.Info,
+                    contentDescription = "Help icon",
+                    modifier = Modifier
+                        .size(size = 30.dp)
+                        .clickable {
+                            showHelp.value = true
+                        },
+                    tint = Color.Black,
+                )
+            }
             Column (
                 modifier = Modifier
                     .fillMaxSize(),
@@ -253,7 +272,7 @@ class Controller {
                                 }
                                 cellView.clickable = false
                                 flagToStartAlgorithm = false
-                                algorithm.Astar()
+                                algorithm.aStar()
 
                             },
                             enabled = flagToStartAlgorithm
@@ -301,6 +320,62 @@ class Controller {
                 }
             }
         }
+    }
+
+    @OptIn(ExperimentalMaterialApi::class)
+    @Composable
+    fun helpDialog (onDismiss: () -> Unit) {
+        AlertDialog (
+            onDismissRequest = {},
+            modifier = Modifier
+                .size(size = 500.dp),
+            title = {
+                Text (text = "Описание алгоритма")
+            },
+            confirmButton = {
+                Button (
+                    onClick = onDismiss
+                ) {
+                    Text (text = "Понятно")
+                }
+            },
+            text = {
+                Text (text = "Описание писать тут")
+            }
+        )
+    }
+
+    @OptIn(ExperimentalMaterialApi::class)
+    @Composable
+    fun errorAlert (onDismiss: () -> Unit, message: String) {
+        AlertDialog (
+            onDismissRequest = {},
+            modifier = Modifier
+                .size(size = 250.dp),
+            title = {
+                Row {
+                    Icon (
+                        Icons.Default.Warning,
+                        contentDescription = "Start icon",
+                        modifier = Modifier
+                            .padding(all = 5.dp)
+                            .size(size = 30.dp),
+                        tint = Color.Black,
+                    )
+                    Text (text = "Ошибка!")
+                }
+            },
+            confirmButton = {
+                Button (
+                    onClick = onDismiss
+                ) {
+                    Text (text = "Понятно")
+                }
+            },
+            text = {
+                Text (text = message)
+            }
+        )
     }
 
     private fun defaultSettings () {
