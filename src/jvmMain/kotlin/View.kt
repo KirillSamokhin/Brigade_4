@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 class CellView {
     private val colors = longArrayOf( 0xff649500, 0xff87cefa, 0xff696969 )
     private val nameCells = listOf( "Клетка травы", "Клетка воды", "Клетка камня" )
+    var clickable = true
     private var start = false
     private var finish = false
     var cellStart: Cell? = null
@@ -32,26 +33,30 @@ class CellView {
                 .aspectRatio(ratio = 1f)
                 .background(color = getColor(cell))
                 .clickable {
-                    when {
-                        start -> {
-                            cellStart?.changeEdge("NONE")
-                            cell.changeEdge("START")
-                            cellStart = cell
-                            start = false
+                    if (clickable) {
+                        when {
+                            start -> {
+                                cellStart?.changeEdge("NONE")
+                                cell.changeEdge("START")
+                                cellStart = cell
+                                start = false
+                            }
+
+                            finish -> {
+                                cellFinish?.changeEdge("NONE")
+                                cell.changeEdge("FINISH")
+                                cellFinish = cell
+                                finish = false
+                            }
+
+                            else -> cell.changeBase()
                         }
-                        finish -> {
-                            cellFinish?.changeEdge("NONE")
-                            cell.changeEdge("FINISH")
-                            cellFinish = cell
-                            finish = false
-                        }
-                        else -> cell.changeBase()
                     }
                 },
             contentAlignment = Alignment.Center,
         ) {
             val size = min(maxWidth, maxHeight) * 0.3f
-            when(cell.edge){
+            when (cell.edge) {
                 Edge.START -> Box (
                     modifier = Modifier
                         .size(width = size, height = size)
@@ -123,6 +128,7 @@ class CellView {
     }
 
     fun default(){
+        clickable = true
         cellStart = null
         cellFinish = null
         start = false
@@ -162,25 +168,22 @@ class CellView {
 }
 
 class FieldView {
-    lateinit var field: Field
 
     @Composable
-    fun drawField (x: Int, y: Int, cellView: CellView) {
+    fun drawField (field: Field, cellView: CellView) {
         Row {
             Box (
                 modifier = Modifier
-                    .weight(weight = 1f)
                     .background(color = Color.Black)
                     .padding(all = 16.dp)
                     .fillMaxHeight()
             ) {
                 MaterialTheme {
-                    field = Field(x, y) // <-- Исправить
                     LazyVerticalGrid(
-                        columns = GridCells.Fixed(x),
+                        columns = GridCells.Fixed(field.x),
                         content = {
-                            items(count = x * y){ i ->
-                                cellView.makeBox(field.field[i / x][i % x])
+                            items(count = field.x * field.y){ i ->
+                                cellView.makeBox(field.field[i / field.x][i % field.x])
                             }
                         }
                     )

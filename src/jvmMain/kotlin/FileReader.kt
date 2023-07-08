@@ -3,6 +3,7 @@ import java.io.File
 
 class FileReader (file: String = "config.txt") {
     private val source = File(file)
+    private val log = Logger()
 
     fun readStart (x: Int, y: Int): Pair<Int, Int> {
         val lines = source.readLines()
@@ -44,8 +45,10 @@ class FileReader (file: String = "config.txt") {
         val fy = readFinish(x, y).second
         val field = Field(x, y)
         field.field[sy][sx].edge = Edge.START
+        log.startCreated(sx, sy)
         field.field[sy][sx].g = 0
         field.field[fy][fx].edge = Edge.FINISH
+        log.finishCreated(fx, fy)
         var counter = 0
         var i = 3
         while (counter < y && i < lines.size) {

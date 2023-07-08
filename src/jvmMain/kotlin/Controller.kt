@@ -21,11 +21,15 @@ import javax.swing.JFileChooser
 
 
 class Controller {
-    private val cellView = CellView()
+    val singleton = Singleton.getInstance()
+    private lateinit var field: Field
     private val fieldView = FieldView()
-    var flagToAlgorithm by mutableStateOf(value = false)
-    var flagToStartAlgorithm by mutableStateOf(value = true)
+    private val cellView = CellView()
+    private var x by mutableStateOf(value = 0)
+    private var y by mutableStateOf(value = 0)
     private var flagToBlockInputs by mutableStateOf(value = true)
+    private var flagToStartAlgorithm by mutableStateOf(value = true)
+    var flagToAlgorithm by mutableStateOf(value = false)
 
     @Composable
     fun userInputCord () {
@@ -106,8 +110,9 @@ class Controller {
                 )
                 Button (
                     onClick = {
-                        fieldView.field.x = inputValueX.toIntOrNull() ?: 0
-                        fieldView.field.y = inputValueY.toIntOrNull() ?: 0
+                        x = inputValueX.toIntOrNull() ?: 0
+                        y = inputValueY.toIntOrNull() ?: 0
+                        field = Field(x, y)
                         flagToAlgorithm = true
                         flagToBlockInputs = false
                     },
@@ -120,14 +125,14 @@ class Controller {
                 Button (
                     onClick = {
                         val fileChooser = JFileChooser()
-                        fileChooser.dialogTitle = "Выберете файл"
+                        fileChooser.dialogTitle = "Выберите файл"
                         val result = fileChooser.showOpenDialog(null)
                         if (result == JFileChooser.APPROVE_OPTION) {
                             val selectedFile = fileChooser.selectedFile
                             selectedFileName = selectedFile.path
                         }
                         val fileReader = FileReader(selectedFileName)
-                        fieldView.field = fileReader.readMap()
+                        field = fileReader.readMap()
                         flagToBlockInputs = false
                         flagToAlgorithm = true
                     },
@@ -150,9 +155,8 @@ class Controller {
                     .padding(all = 16.dp)
                     .fillMaxHeight()
             ) {
-                fieldView.drawField(fieldView.field.x, fieldView.field.y, cellView)
+                fieldView.drawField(field, cellView)
             }
-            /* Пространство справа */
             Box (
                 modifier = Modifier
                     .weight(weight = 0.3f)
@@ -170,7 +174,9 @@ class Controller {
                                 .size(size = 95.dp)
                                 .background(color = Color.Blue)
                                 .clickable {
-                                    cellView.cellEdge("START")
+                                    if (flagToStartAlgorithm) {
+                                        cellView.cellEdge("START")
+                                    }
                                 }
                         ) { }
                         Text (
@@ -190,7 +196,9 @@ class Controller {
                                 .size(size = 95.dp)
                                 .background(color = Color.Yellow)
                                 .clickable {
-                                    cellView.cellEdge("FINISH")
+                                    if (flagToStartAlgorithm) {
+                                        cellView.cellEdge("FINISH")
+                                    }
                                 }
                         ) { }
                         Text (
@@ -210,26 +218,50 @@ class Controller {
                     ) {
                         Button (
                             onClick = {
-                                val algorithm = Algorithm(fieldView.field)
+                                val algorithm = Algorithm(field)
                                 if (cellView.cellStart == null || cellView.cellFinish == null) {
                                     /* Вывод, что: либо финиша, либо старта нет */
                                 }
                                 else {
                                     val answer = algorithm.aStar(cellView.cellStart!!.x, cellView.cellStart!!.y, cellView.cellFinish!!.x, cellView.cellFinish!!.y)
                                     algorithm.recoverPath(answer, cellView.cellFinish!!)
+                                    cellView.clickable = false
+                                    flagToStartAlgorithm = false
                                 }
-                            }
+                            },
+                            enabled = flagToStartAlgorithm
                         ) {
                             Text (text = "Начать")
                         }
                         Button (
                             onClick = {
+
+                            },
+                            enabled = !flagToStartAlgorithm
+                        ) {
+                            Text (text = "Далее")
+                        }
+                        Button (
+                            onClick = {
                                 cellView.default()
                                 defaultSettings()
+                                flagToStartAlgorithm = true
                             }
                         ) {
                             Text (text = "Сброс")
                         }
+                    }
+                    Row (
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(all = 10.dp),
+                    ) {
+                        println(singleton.message)
+                        Text (
+                            text = singleton.message,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                     }
                 }
             }
@@ -237,7 +269,7 @@ class Controller {
     }
 
     private fun defaultSettings () {
-        fieldView.field.default()
+        field.default()
     }
 }
 
@@ -246,7 +278,7 @@ fun main() = application {
     Window (
         title = "Algorithm A*",
         onCloseRequest = ::exitApplication,
-        state = WindowState (
+        state = WindowState(
             size = DpSize(1600.dp, 900.dp)
         )
     ) {

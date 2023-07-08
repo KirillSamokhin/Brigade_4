@@ -161,6 +161,8 @@ class Heap {
 
 
 class Algorithm (private var field: Field) {
+    private val log = Logger()
+
     private fun heuristic (x: Int, y: Int, fx: Int, fy: Int): Int {
         return 20 * (abs(fx-x) + abs(fy-y))
     }
@@ -170,16 +172,24 @@ class Algorithm (private var field: Field) {
             return
         }
         if (this.field.field[y][x].base == Base.STONE) {
+            log.stone(x, y)
             return
         }
         val node = this.field.field[y][x]
         val tempDist = parent.g + this.field.field[y][x].getWeight()
         if (node.g == -1 || node.g > tempDist) {
+            val logA = node.g
             roots[node] = parent
             node.setParams(tempDist, heuristic(x, y, fx, fy))
             node.parent = Pair(parent.x, parent.y)
             node.status = Status.CHECK
             queue.put(node)
+            if (logA == -1) {
+                log.cellProc(node)
+            } else {
+                log.betterWay(node)
+            }
+            Thread.sleep(1000)
         }
     }
 
@@ -192,9 +202,11 @@ class Algorithm (private var field: Field) {
         while (queue.size() != 0) {
             val cur = queue.extractMin()
             cur.status = Status.VIEWED
+            log.curCell(cur)
             val x = cur.x
             val y = cur.y
             if (cur == end) {
+                log.finishReached()
                 break
             }
             for (i in listOf(-1, 1)) {
@@ -209,12 +221,14 @@ class Algorithm (private var field: Field) {
         var curr: Cell? = end
         when (roots[end] != null) {
             true -> {
-                while(curr != null){
+                while(curr != null) {
                     curr.status = Status.PATH
                     curr = roots[curr]
                 }
             }
-            false -> { }
+            false -> {
+                log.finishUnreachable()
+            }
         }
     }
 }
