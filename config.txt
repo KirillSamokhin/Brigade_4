@@ -1,0 +1,6 @@
+7 4
+0 0
+6 3
+G G G G W M W
+G M G W G G M
+G W G M M M M

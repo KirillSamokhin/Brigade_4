@@ -9,24 +9,32 @@ class Algorythm(var field: Field){
         if(x < 0 || y < 0 || x >= this.field.x || y >= this.field.y){
             return
         }
+        val log = Logger()
         if(this.field.field[y][x].base == Base.STONE){
-            println("skip $x $y")
+            log.stone(x, y)
             return
         }
         val node = this.field.field[y][x]
         val temp_dist = parent.g + this.field.field[y][x].getWeight()
         if(node.g == -1 || node.g > temp_dist){
+            val a = node.g
             roots[node] = parent
             node.setParams(temp_dist, heuristic(x, y, fx, fy))
             node.parent = Pair<Int, Int>(parent.x, parent.y)
             node.status = Status.CHECK
             queue.put(node)
+            if(a == -1){
+                log.cellProc(node)
+            }
+            else{
+                log.betterWay(node)
+            }
             Thread.sleep(1000)
-//            println("Iter: $x $y")
         }
     }
 
     fun Astar(sx: Int, sy: Int, fx: Int, fy: Int): MutableMap<Cell, Cell?>{
+        val log = Logger()
         var roots: MutableMap<Cell, Cell?> = mutableMapOf(field.field[sy][sx] to null)
         var queue = Heap()
         val end = field.field[fy][fx]
@@ -35,9 +43,11 @@ class Algorythm(var field: Field){
         while(queue.size() != 0){
             val cur = queue.extractMin()
             cur.status = Status.VIEWED
+            log.curCell(cur)
             val x = cur.x
             val y = cur.y
             if(cur == end){
+                log.finishReached()
                 break
             }
             for(i in listOf(-1, 1)){
@@ -49,10 +59,11 @@ class Algorythm(var field: Field){
     }
 
     fun recoverPath(roots: MutableMap<Cell, Cell?>, end: Cell): MutableList<Cell>{
+        val log = Logger()
         var path = emptyList<Cell>().toMutableList()
         var curr: Cell? = end
         if(roots[end] == null){
-            println("Финиш недостижим!")
+            log.finishUnreachable()
             return path
         }
         while(curr != null){
@@ -60,6 +71,7 @@ class Algorythm(var field: Field){
             curr = roots[curr]
         }
         path.reverse()
+        log.viewPath(path)
         return path
     }
 }

@@ -32,6 +32,7 @@ class FileReader(file: String = "config.txt"){
         return Pair(fx, fy)
     }
     fun readMap(): Field{
+        val log = Logger()
         val lines = source.readLines()
         val X = lines[0].split(" ")[0].toInt()
         val Y = lines[0].split(" ")[1].toInt()
@@ -41,18 +42,19 @@ class FileReader(file: String = "config.txt"){
         val fy = readFinish(X, Y).second
         val field = Field(X, Y)
         field.field[sy][sx].edge = Edge.START
+        log.startCreated(sx, sy)
         field.field[sy][sx].g = 0
         field.field[fy][fx].edge = Edge.FINISH
+        log.finishCreated(fx, fy)
         var counter = 0
         var i = 3
-        while(counter < Y){
+        while(counter < Y && i < lines.size){
             if(lines[i] == ""){
                 i+=1
                 continue
             }
             val line = lines[i].split(" ")
-            println(lines[i])
-            if(line.size < X-1){
+            if(line.size < X){
                 i+=1
                 continue
             }

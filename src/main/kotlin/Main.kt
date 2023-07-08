@@ -14,7 +14,4 @@ fun main(args: Array<String>){
     val al = Algorythm(test)
     val roots = al.Astar(sx, sy, fx, fy)
     val ans = al.recoverPath(roots, test.field[fy][fx])
-    for(i in ans){
-        println("${i.x} ${i.y}")
-    }
 }
