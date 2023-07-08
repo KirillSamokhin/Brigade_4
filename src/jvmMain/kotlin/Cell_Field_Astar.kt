@@ -233,7 +233,6 @@ class Algorithm(var field: Field){
         end = field.field[fy][fx]
         field.field[sy][sx].setParams(0, heuristic(sx, sy, fx, fy))
         queue.put(field.field[sy][sx])
-        //iteration()
     }
 
     fun iteration(): MutableMap<Cell, Cell?>?{
