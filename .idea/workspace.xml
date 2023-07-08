@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a52d59f7-911a-491f-a3ad-d3eaacfcb33e" name="Changes" comment="Добавлено чтение из файла, проверка достижимости финиша, задержка при проверке клеток и установка числовых характеристик старта.">
-      <change afterPath="$PROJECT_DIR$/config.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/Logger.kt" afterDir="false" />
+    <list default="true" id="a52d59f7-911a-491f-a3ad-d3eaacfcb33e" name="Changes" comment="Создан класс Logger. Его методы вызываются в алгоритме и при установке старта/финиша.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Algorythm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Algorythm.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Field.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Field.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/FileReader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/FileReader.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
     </list>
@@ -93,7 +92,9 @@
       <workItem from="1688556929201" duration="7460000" />
       <workItem from="1688573484888" duration="41000" />
       <workItem from="1688720480786" duration="12286000" />
-      <workItem from="1688806075469" duration="2663000" />
+      <workItem from="1688806075469" duration="3048000" />
+      <workItem from="1688824405672" duration="320000" />
+      <workItem from="1688826648849" duration="1019000" />
     </task>
     <task id="LOCAL-00001" summary="Algorithm 0">
       <option name="closed" value="true" />
@@ -119,7 +120,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688731565213</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Создан класс Logger. Его методы вызываются в алгоритме и при установке старта/финиша.">
+      <option name="closed" value="true" />
+      <created>1688809077048</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688809077048</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,6 +161,7 @@
     <MESSAGE value="Algorithm 0" />
     <MESSAGE value="Algorithm 1" />
     <MESSAGE value="Добавлено чтение из файла, проверка достижимости финиша, задержка при проверке клеток и установка числовых характеристик старта." />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлено чтение из файла, проверка достижимости финиша, задержка при проверке клеток и установка числовых характеристик старта." />
+    <MESSAGE value="Создан класс Logger. Его методы вызываются в алгоритме и при установке старта/финиша." />
+    <option name="LAST_COMMIT_MESSAGE" value="Создан класс Logger. Его методы вызываются в алгоритме и при установке старта/финиша." />
   </component>
 </project>

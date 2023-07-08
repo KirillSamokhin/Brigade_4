@@ -29,12 +29,16 @@ class Algorythm(var field: Field){
             else{
                 log.betterWay(node)
             }
-            Thread.sleep(1000)
+//            Thread.sleep(1000)
         }
     }
 
-    fun Astar(sx: Int, sy: Int, fx: Int, fy: Int): MutableMap<Cell, Cell?>{
+    fun Astar(): MutableMap<Cell, Cell?>{
         val log = Logger()
+        val sx = field.startCord.first
+        val sy = field.startCord.second
+        val fx = field.finishCord.first
+        val fy = field.finishCord.second
         var roots: MutableMap<Cell, Cell?> = mutableMapOf(field.field[sy][sx] to null)
         var queue = Heap()
         val end = field.field[fy][fx]
@@ -58,8 +62,9 @@ class Algorythm(var field: Field){
         return roots
     }
 
-    fun recoverPath(roots: MutableMap<Cell, Cell?>, end: Cell): MutableList<Cell>{
+    fun recoverPath(roots: MutableMap<Cell, Cell?>): MutableList<Cell>{
         val log = Logger()
+        val end = field.field[field.finishCord.second][field.finishCord.first]
         var path = emptyList<Cell>().toMutableList()
         var curr: Cell? = end
         if(roots[end] == null){
