@@ -43,4 +43,12 @@ class Logger {
             print(" -> (${root[i].x}, ${root[i].y})")
         }
     }
+
+    fun outOfBounds(x: Int, y: Int){
+        singleton.message = "Клетка с координатами ($x, $y) выходит за границы поля."
+    }
+
+    fun cellViewed(x: Int, y: Int){
+        singleton.message = "Клетка с координатами ($x, $y) уже рассмотрена."
+    }
 }

@@ -196,6 +196,7 @@ class Algorithm(var field: Field){
         offset = (offset + 1) % 4
         val parent = cur
         if(xp < 0 || yp < 0 || xp >= this.field.x || yp >= this.field.y){
+            log.outOfBounds(xp, yp)
             return
         }
         if(this.field.field[yp][xp].base == Base.STONE){
@@ -217,6 +218,9 @@ class Algorithm(var field: Field){
             else{
                 log.betterWay(node)
             }
+        }
+        else{
+            log.cellViewed(xp, yp)
         }
     }
 
@@ -245,11 +249,6 @@ class Algorithm(var field: Field){
             stop = true
             return roots
         }
-        //for(i in listOf(-1, 1)){
-            //cellProcess()
-            //cellProcess(x+i, y, queue, roots, cur, fx, fy)
-            //cellProcess()
-            //cellProcess(x, y+i, queue, roots, cur, fx, fy) }
         return null
     }
 

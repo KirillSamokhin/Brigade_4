@@ -32,7 +32,9 @@ class Controller {
     private var flagToStartAlgorithm by mutableStateOf(value = true)
     var flagToAlgorithm by mutableStateOf(value = false)
     private var flagToEndAlgorithm by mutableStateOf(value = true)
+    private var flagAlgorithmStarted by mutableStateOf(value = true)
     var count = 0
+
 
     @Composable
     fun userInputCord () {
@@ -257,6 +259,7 @@ class Controller {
                                 cellView.default()
                                 defaultSettings()
                                 flagToStartAlgorithm = true
+                                flagToEndAlgorithm = true
                             }
                         ) {
                             Text (text = "Сброс")
@@ -281,6 +284,8 @@ class Controller {
 
     private fun defaultSettings () {
         field.default()
+        count = 0
+
     }
 }
 
