@@ -219,15 +219,14 @@ class Controller {
                         Button (
                             onClick = {
                                 val algorithm = Algorithm(field)
-                                if (cellView.cellStart == null || cellView.cellFinish == null) {
-                                    /* Вывод, что: либо финиша, либо старта нет */
-                                }
-                                else {
-                                    val answer = algorithm.aStar(cellView.cellStart!!.x, cellView.cellStart!!.y, cellView.cellFinish!!.x, cellView.cellFinish!!.y)
-                                    algorithm.recoverPath(answer, cellView.cellFinish!!)
-                                    cellView.clickable = false
-                                    flagToStartAlgorithm = false
-                                }
+                                field.startCord = Pair(cellView.cellStart?.x ?: 0, cellView.cellStart?.y ?: 0)
+                                field.finishCord = Pair(cellView.cellFinish?.x ?: (field.x-1), cellView.cellFinish?.y ?: (field.y-1))
+
+                                val answer = algorithm.Astar()
+                                algorithm.recoverPath(answer)
+                                cellView.clickable = false
+                                flagToStartAlgorithm = false
+
                             },
                             enabled = flagToStartAlgorithm
                         ) {

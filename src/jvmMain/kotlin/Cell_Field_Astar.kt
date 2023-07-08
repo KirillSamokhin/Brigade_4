@@ -72,12 +72,15 @@ class Cell {
 }
 
 
-class Field (var x: Int, var y: Int) {
-    val field = Array(this.y){Array(this.x){ Cell() }}
 
-    init {
-        for (i in 0 until y) {
-            for (j in 0 until x) {
+class Field(val x: Int, val y: Int){
+    val field = Array(this.y){Array<Cell>(this.x){Cell()}}
+    var startCord = Pair(-1, -1)
+    var finishCord = Pair(-1, -1)
+
+    init{
+        for(i in 0 until y){
+            for(j in 0 until x){
                 this.field[i][j].x = j
                 this.field[i][j].y = i
             }
@@ -160,56 +163,61 @@ class Heap {
 }
 
 
-class Algorithm (private var field: Field) {
+class Algorithm(var field: Field){
     private val log = Logger()
-
-    private fun heuristic (x: Int, y: Int, fx: Int, fy: Int): Int {
-        return 20 * (abs(fx-x) + abs(fy-y))
+    fun heuristic(x: Int, y: Int, fx: Int, fy: Int): Int{
+        return 20*(abs(fx-x) + abs(fy-y))
     }
 
-    private fun cellProcess (x: Int, y: Int, queue: Heap, roots: MutableMap<Cell, Cell?>, parent: Cell, fx: Int, fy: Int) {
-        if (x < 0 || y < 0 || x >= this.field.x || y >= this.field.y) {
+    fun cellProcess(x: Int, y: Int, queue: Heap, roots: MutableMap<Cell, Cell?>, parent: Cell, fx: Int, fy: Int){
+        if(x < 0 || y < 0 || x >= this.field.x || y >= this.field.y){
             return
         }
-        if (this.field.field[y][x].base == Base.STONE) {
+        val log = Logger()
+        if(this.field.field[y][x].base == Base.STONE){
             log.stone(x, y)
             return
         }
         val node = this.field.field[y][x]
-        val tempDist = parent.g + this.field.field[y][x].getWeight()
-        if (node.g == -1 || node.g > tempDist) {
-            val logA = node.g
+        val temp_dist = parent.g + this.field.field[y][x].getWeight()
+        if(node.g == -1 || node.g > temp_dist){
+            val a = node.g
             roots[node] = parent
-            node.setParams(tempDist, heuristic(x, y, fx, fy))
-            node.parent = Pair(parent.x, parent.y)
+            node.setParams(temp_dist, heuristic(x, y, fx, fy))
+            node.parent = Pair<Int, Int>(parent.x, parent.y)
             node.status = Status.CHECK
             queue.put(node)
-            if (logA == -1) {
+            if(a == -1){
                 log.cellProc(node)
-            } else {
+            }
+            else{
                 log.betterWay(node)
             }
-            Thread.sleep(1000)
+//            Thread.sleep(1000)
         }
     }
 
-    fun aStar (sx: Int, sy: Int, fx: Int, fy: Int): MutableMap<Cell, Cell?> {
-        val roots: MutableMap<Cell, Cell?> = mutableMapOf(field.field[sy][sx] to null)
-        val queue = Heap()
+    fun Astar(): MutableMap<Cell, Cell?>{
+        val sx = field.startCord.first
+        val sy = field.startCord.second
+        val fx = field.finishCord.first
+        val fy = field.finishCord.second
+        var roots: MutableMap<Cell, Cell?> = mutableMapOf(field.field[sy][sx] to null)
+        var queue = Heap()
         val end = field.field[fy][fx]
         field.field[sy][sx].f = heuristic(sx, sy, fx, fy)
         queue.put(field.field[sy][sx])
-        while (queue.size() != 0) {
+        while(queue.size() != 0){
             val cur = queue.extractMin()
             cur.status = Status.VIEWED
             log.curCell(cur)
             val x = cur.x
             val y = cur.y
-            if (cur == end) {
+            if(cur == end){
                 log.finishReached()
                 break
             }
-            for (i in listOf(-1, 1)) {
+            for(i in listOf(-1, 1)){
                 cellProcess(x+i, y, queue, roots, cur, fx, fy)
                 cellProcess(x, y+i, queue, roots, cur, fx, fy)
             }
@@ -217,7 +225,8 @@ class Algorithm (private var field: Field) {
         return roots
     }
 
-    fun recoverPath (roots: MutableMap<Cell, Cell?>, end: Cell) {
+    fun recoverPath (roots: MutableMap<Cell, Cell?>) {
+        val end = field.field[field.finishCord.second][field.finishCord.first]
         var curr: Cell? = end
         when (roots[end] != null) {
             true -> {
