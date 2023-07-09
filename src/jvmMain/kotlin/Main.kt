@@ -4,6 +4,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 
+
 fun main () = application {
     val controller = Controller()
     Window (
@@ -28,16 +29,3 @@ fun main () = application {
         controller.userInputCord()
     }
 }
-
-//fun main () = application {
-//    Window (
-//        onCloseRequest = ::exitApplication
-//    ) {
-//        Image (
-//            painter = painterResource("sample.png"),
-//            contentDescription = "Sample",
-//            modifier = Modifier
-//                .fillMaxSize()
-//        )
-//    }
-//}

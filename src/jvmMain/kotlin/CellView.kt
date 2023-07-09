@@ -18,8 +18,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 
+
 class CellView {
-    private val colors = longArrayOf( 0xff649500, 0xff87cefa, 0xff696969 )
+    private val pictures = listOf( "Grass.jpg", "Water.jpg", "Stone.jpg" )
     private val nameCells = listOf( "Клетка травы", "Клетка воды", "Клетка камня" )
     var clickable = true
     private var start = false
@@ -58,7 +59,7 @@ class CellView {
         ) {
             Image (
                 painter = painterResource(getImageName(cell)),
-                contentDescription = "Grass picture",
+                contentDescription = "Cell pictures",
                 modifier = Modifier
                     .fillMaxSize()
             )
@@ -66,8 +67,7 @@ class CellView {
                 modifier = Modifier
                     .matchParentSize()
                     .background(getColor(cell))
-
-            ){}
+            ) { }
             val size = min(maxWidth, maxHeight) * 0.3f
             when (cell.edge) {
                 Edge.START -> Icon (
@@ -111,7 +111,7 @@ class CellView {
     @Composable
     fun screenInformationAboutTypes () {
         Column {
-            for (i in (colors.indices)) {
+            for (i in (pictures.indices)) {
                 Row (
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -121,9 +121,13 @@ class CellView {
                             .size(size = 95.dp)
                             .background(color = Color.Black)
                             .padding(all = 2.dp)
-                            .background(color = Color(color = colors[i]))
                     ) {
-
+                        Image (
+                            painter = painterResource(pictures[i]),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
                     }
                     Text (
                         text = nameCells[i],
@@ -172,15 +176,7 @@ class CellView {
         return when(cell.status){
             Status.CHECK -> Color(0x88696969)
             Status.VIEWED -> Color(0xaa161616)
-            //Status.PATH -> Color.Red
             else -> Color(0x00000000)
         }
-    }
-
-    private fun changeColor (average: Float, d: Int, coefficient: Float, cur: Color): Color {
-        val r = cur.red - (cur.red - average)/d - coefficient
-        val g = cur.green - (cur.green - average)/d - coefficient
-        val b = cur.blue - (cur.blue - average)/d - coefficient
-        return Color(r, g, b)
     }
 }

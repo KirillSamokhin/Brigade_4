@@ -1,6 +1,7 @@
 import kotlin.math.abs
 
-class Algorithm(private var field: Field){
+
+class Algorithm (private var field: Field) {
     private val log = Logger()
     private var sx: Int = 0
     private var sy: Int = 0
@@ -15,13 +16,12 @@ class Algorithm(private var field: Field){
     private var offset = 0
 
     private fun heuristic (x: Int, y: Int, fx: Int, fy: Int): Int {
-        return 2*(abs(fx-x) + abs(fy-y))
+        return 2 * (abs(fx-x) + abs(fy-y))
     }
 
     fun cellProcess () {
         var xp = x
         var yp = y
-        println(offset)
         when (offset) {
             1 -> xp = x-1
             2 -> yp = y-1
@@ -47,7 +47,7 @@ class Algorithm(private var field: Field){
             node.parent = Pair(parent.x, parent.y)
             node.status = Status.CHECK
             queue.put(node)
-            if(a == -1){
+            if (a == -1) {
                 log.cellProcesses(node)
             } else {
                 log.betterWay(node)
@@ -97,7 +97,7 @@ class Algorithm(private var field: Field){
                 log.finishReached()
                 return roots
             }
-            repeat (4) {
+            repeat (times = 4) {
                 cellProcess()
             }
         }

@@ -36,6 +36,27 @@ class Controller {
         if (showHelp.value) {
             helpDialog (onDismiss = {showHelp.value = false})
         }
+        val showError1 = remember { mutableStateOf(value = false) }
+        if (showError1.value) {
+            errorAlert(
+                onDismiss = { showError1.value = false },
+                message = "Отправить можно только положительные числа больше нуля"
+            )
+        }
+        val showError2 = remember { mutableStateOf(value = false) }
+        if (showError2.value) {
+            errorAlert(
+                onDismiss = { showError2.value = false },
+                message = "В файле должны быть указаны положительные размеры поля. Пример файла:\n" +
+                        "7 4\n" +
+                        "0 0\n" +
+                        "6 3\n" +
+                        "Т Т Т Т В К Т\n" +
+                        "Т К Т В Т Т К\n" +
+                        "Т В Т К К К К\n" +
+                        "Т В Т Т В Т Т"
+            )
+        }
         Surface (
             color = MaterialTheme.colors.background
         ) {
@@ -133,9 +154,13 @@ class Controller {
                     onClick = {
                         x = inputValueX.toIntOrNull() ?: 0
                         y = inputValueY.toIntOrNull() ?: 0
-                        field = Field(x, y)
-                        flagToAlgorithm = true
-                        flagToBlockInputs = false
+                        if (x > 0 && y > 0) {
+                            field = Field(x, y)
+                            flagToAlgorithm = true
+                            flagToBlockInputs = false
+                        } else {
+                            showError1.value = true
+                        }
                     },
                     modifier = Modifier
                         .padding(all = 5.dp),
@@ -153,9 +178,13 @@ class Controller {
                             selectedFileName = selectedFile.path
                         }
                         val fileReader = FileReader(selectedFileName)
-                        field = fileReader.readMap()
-                        flagToBlockInputs = false
-                        flagToAlgorithm = true
+                        if (fileReader.readMap() != null) {
+                            field = fileReader.readMap()!!
+                            flagToBlockInputs = false
+                            flagToAlgorithm = true
+                        } else {
+                            showError2.value = true
+                        }
                     },
                     modifier = Modifier
                         .padding(all = 5.dp),
@@ -309,7 +338,9 @@ class Controller {
                             onClick = {
                                 val answer = algorithm.fullIteration()
                                 algorithm.recoverPath(answer)
-                            }
+                                flagToEndAlgorithm = false
+                            },
+                            enabled = !flagToStartAlgorithm && flagToEndAlgorithm
                         ) {
                             Text (text = "Конец")
                         }
@@ -333,6 +364,15 @@ class Controller {
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun helpDialog (onDismiss: () -> Unit) {
+        val option = "Алгоритм А*: Нахождение кратчайшего пути в графе.\nВ данной визуализации алгоритма мы используем Манхеттенскую эвристику и представляем" +
+                " граф в виде карты состоящей из клеток:\n- Клетка Травы: клетка с ценой прохода 1.\n- Клетка Воды: клетка " +
+                "с ценой прохода 3.\n- Клетка Камня: клетка, которую нельзя пройти.\nНа поле должно быть установлено Начало " +
+                "и Финиш. Их расположение задаётся пользователем, но если пользователь не выберет ничего, то по умолчанию " +
+                "Начало будет слева сверху, а Финиш справа снизу. Во время работы алгоритма будут происходить следующие " +
+                "действия:\n- Клетка становится бледного оттенка, если она находится на рассмотрении.\n- Клетка становится " +
+                "тёмного оттенка, если она возможно входит в минимальный путь.\n- Клетка окрашивается в жёлтый цвет, если " +
+                "кратчайший путь найден (все клетки кратчайшего пути окрашены в этот цвет). \nВвод размера поля можно задать " +
+                "самому с последующей настройкой поля, либо из файла."
         AlertDialog (
             onDismissRequest = {},
             modifier = Modifier
@@ -348,7 +388,7 @@ class Controller {
                 }
             },
             text = {
-                Text (text = "Алгоритм")
+                Text (text = option)
             }
         )
     }
@@ -359,7 +399,7 @@ class Controller {
         AlertDialog (
             onDismissRequest = {},
             modifier = Modifier
-                .size(size = 250.dp),
+                .size(size = 300.dp),
             title = {
                 Row {
                     Icon (
@@ -377,7 +417,7 @@ class Controller {
                 Button (
                     onClick = onDismiss
                 ) {
-                    Text (text = "о")
+                    Text (text = "Понятно")
                 }
             },
             text = {

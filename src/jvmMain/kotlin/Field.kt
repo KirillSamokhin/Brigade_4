@@ -1,4 +1,4 @@
-class Field(val x: Int, val y: Int){
+class Field (val x: Int, val y: Int) {
     val field = Array(this.y){Array(this.x){Cell()}}
     var startCord = Pair(-1, -1)
     var finishCord = Pair(-1, -1)

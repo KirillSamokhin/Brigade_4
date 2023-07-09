@@ -7,8 +7,15 @@
     <list default="true" id="f3ca84f2-0605-402b-bc27-e7459d800ab8" name="Changes" comment="состояние рисуется поверх текстуры">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Algorithm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Algorithm.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/CellView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/CellView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Field.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Field.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/FieldView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/FieldView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Logger.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Logger.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Singleton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Singleton.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +52,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
@@ -63,6 +75,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;all__project&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Полина/IdeaProjects/demo1/src/jvmMain/kotlin&quot;
   }
 }</component>
@@ -98,6 +111,8 @@
         <item itemvalue="Kotlin.MainKt (1)" />
         <item itemvalue="Kotlin.MainKt" />
         <item itemvalue="Kotlin.ControllerKt" />
+        <item itemvalue="Kotlin.MainKt (1)" />
+        <item itemvalue="Kotlin.MainKt" />
       </list>
     </recent_temporary>
   </component>
@@ -174,15 +189,5 @@
     <MESSAGE value="пошаговость полностью готова" />
     <MESSAGE value="состояние рисуется поверх текстуры" />
     <option name="LAST_COMMIT_MESSAGE" value="состояние рисуется поверх текстуры" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -2,6 +2,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
+
 class Cell {
     var base by mutableStateOf(value = Base.GRASS)
     var status by mutableStateOf(value = Status.NOTVIEWED)

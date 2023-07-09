@@ -1,14 +1,6 @@
 class Logger {
     private val singleton = Singleton.getInstance()
 
-    fun startCreated (x: Int, y: Int) {
-        singleton.message = "Старт установлен в клетку с координатами ($x, $y)."
-    }
-
-    fun finishCreated (x: Int, y: Int) {
-        singleton.message = "Финиш установлен в клетку с координатами ($x, $y)."
-    }
-
     fun finishUnreachable () {
         singleton.message = "Финиш недостижим!"
     }
