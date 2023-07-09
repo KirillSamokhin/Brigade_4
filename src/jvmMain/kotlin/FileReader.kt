@@ -12,7 +12,7 @@ class FileReader(file: String = "config.txt"){
         var sy = lines[1].split(" ")[1].toInt()
         var fx = lines[2].split(" ")[0].toInt()
         var fy = lines[2].split(" ")[1].toInt()
-        if (x <= 0 || y <= 0) {
+        if (x <= 1 || y <= 1) {
             return null
         }
         when {

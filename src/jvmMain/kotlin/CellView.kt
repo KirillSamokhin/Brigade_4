@@ -23,8 +23,8 @@ class CellView {
     private val pictures = listOf( "Grass.jpg", "Water.jpg", "Stone.jpg" )
     private val nameCells = listOf( "Клетка травы", "Клетка воды", "Клетка камня" )
     var clickable = true
-    private var start = false
-    private var finish = false
+    var start = false
+    var finish = false
     var cellStart: Cell? = null
     var cellFinish: Cell? = null
 
@@ -43,14 +43,12 @@ class CellView {
                                 cellStart = cell
                                 start = false
                             }
-
                             finish -> {
                                 cellFinish?.changeEdge("NONE")
                                 cell.changeEdge("FINISH")
                                 cellFinish = cell
                                 finish = false
                             }
-
                             else -> cell.changeBase()
                         }
                     }
@@ -63,7 +61,7 @@ class CellView {
                 modifier = Modifier
                     .fillMaxSize()
             )
-            Box(
+            Box (
                 modifier = Modifier
                     .matchParentSize()
                     .background(getColor(cell))

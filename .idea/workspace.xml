@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ca84f2-0605-402b-bc27-e7459d800ab8" name="Changes" comment="состояние рисуется поверх текстуры">
+    <list default="true" id="f3ca84f2-0605-402b-bc27-e7459d800ab8" name="Changes" comment="Добавил описание и несколько вылавливаний ошибок.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Algorithm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Algorithm.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/CellView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/CellView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Field.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Field.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/FieldView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/FieldView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Logger.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Logger.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Singleton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Singleton.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +150,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688897654559</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Добавил описание и несколько вылавливаний ошибок.">
+      <option name="closed" value="true" />
+      <created>1688918030353</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1688918030353</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -188,6 +189,7 @@
     <MESSAGE value="финиш и старт через файл починены" />
     <MESSAGE value="пошаговость полностью готова" />
     <MESSAGE value="состояние рисуется поверх текстуры" />
-    <option name="LAST_COMMIT_MESSAGE" value="состояние рисуется поверх текстуры" />
+    <MESSAGE value="Добавил описание и несколько вылавливаний ошибок." />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил описание и несколько вылавливаний ошибок." />
   </component>
 </project>

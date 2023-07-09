@@ -40,7 +40,7 @@ class Controller {
         if (showError1.value) {
             errorAlert(
                 onDismiss = { showError1.value = false },
-                message = "Отправить можно только положительные числа больше нуля"
+                message = "Отправить можно только положительные числа больше 0 и меньше 50"
             )
         }
         val showError2 = remember { mutableStateOf(value = false) }
@@ -154,7 +154,7 @@ class Controller {
                     onClick = {
                         x = inputValueX.toIntOrNull() ?: 0
                         y = inputValueY.toIntOrNull() ?: 0
-                        if (x > 0 && y > 0) {
+                        if (x in 2..50 && y in 2..50) {
                             field = Field(x, y)
                             flagToAlgorithm = true
                             flagToBlockInputs = false
@@ -180,6 +180,8 @@ class Controller {
                         val fileReader = FileReader(selectedFileName)
                         if (fileReader.readMap() != null) {
                             field = fileReader.readMap()!!
+                            cellView.cellStart = field.field[field.startCord.second][field.startCord.first]
+                            cellView.cellFinish = field.field[field.finishCord.second][field.finishCord.first]
                             flagToBlockInputs = false
                             flagToAlgorithm = true
                         } else {
@@ -292,17 +294,19 @@ class Controller {
                             onClick = {
                                 algorithm = Algorithm(field)
                                 field.startCord = Pair(cellView.cellStart?.x ?: 0, cellView.cellStart?.y ?: 0)
+                                println(field.startCord)
                                 if (field.startCord.first == 0 && field.startCord.second == 0) {
                                     field.field[0][0].changeEdge("START")
                                 }
-                                field.finishCord = Pair(cellView.cellFinish?.x ?: (field.x - 1), cellView.cellFinish?.y ?: (field.y - 1))
+                                field.finishCord = Pair(cellView.cellFinish?.x ?: (field.x - 1),
+                                        cellView.cellFinish?.y ?: (field.y - 1))
+                                println(field.finishCord)
                                 if (field.finishCord.first == field.x - 1 && field.finishCord.second == field.y - 1) {
                                     field.field[field.y - 1][field.x - 1].changeEdge("FINISH")
                                 }
                                 cellView.clickable = false
                                 flagToStartAlgorithm = false
                                 algorithm.aStar()
-
                             },
                             enabled = flagToStartAlgorithm
                         ) {
@@ -364,15 +368,17 @@ class Controller {
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun helpDialog (onDismiss: () -> Unit) {
-        val option = "Алгоритм А*: Нахождение кратчайшего пути в графе.\nВ данной визуализации алгоритма мы используем Манхеттенскую эвристику и представляем" +
-                " граф в виде карты состоящей из клеток:\n- Клетка Травы: клетка с ценой прохода 1.\n- Клетка Воды: клетка " +
-                "с ценой прохода 3.\n- Клетка Камня: клетка, которую нельзя пройти.\nНа поле должно быть установлено Начало " +
-                "и Финиш. Их расположение задаётся пользователем, но если пользователь не выберет ничего, то по умолчанию " +
-                "Начало будет слева сверху, а Финиш справа снизу. Во время работы алгоритма будут происходить следующие " +
-                "действия:\n- Клетка становится бледного оттенка, если она находится на рассмотрении.\n- Клетка становится " +
-                "тёмного оттенка, если она возможно входит в минимальный путь.\n- Клетка окрашивается в жёлтый цвет, если " +
-                "кратчайший путь найден (все клетки кратчайшего пути окрашены в этот цвет). \nВвод размера поля можно задать " +
-                "самому с последующей настройкой поля, либо из файла."
+        val option = "Алгоритм А*: Нахождение кратчайшего пути в графе.\nВ данной визуализации алгоритма мы" +
+                " используем Манхеттенскую эвристику и представляем граф в виде карты состоящей из клеток:\n- " +
+                "Клетка Травы: клетка с ценой прохода 1.\n- Клетка Воды: клетка с ценой прохода 3.\n- Клетка " +
+                "Камня: клетка, которую нельзя пройти.\nНа поле должно быть установлено Начало и Финиш. " +
+                "Их расположение задаётся пользователем, но если пользователь не выберет ничего, то по умолчанию " +
+                "Начало будет слева сверху, а Финиш справа снизу. Во время работы алгоритма будут происходить" +
+                " следующие действия:\n- Клетка становится бледного оттенка, если она находится на рассмотрении.\n-" +
+                " Клетка становится тёмного оттенка, если она возможно входит в минимальный путь.\n- " +
+                "Клетка окрашивается в жёлтый цвет, если кратчайший путь найден (все клетки кратчайшего пути " +
+                "окрашены в этот цвет). \nВвод размера поля можно задать самому с последующей настройкой " +
+                "поля, либо из файла."
         AlertDialog (
             onDismissRequest = {},
             modifier = Modifier
@@ -396,28 +402,42 @@ class Controller {
     @OptIn(ExperimentalMaterialApi::class)
     @Composable
     fun errorAlert (onDismiss: () -> Unit, message: String) {
+        var sizeDialog = 200
+        if (message.length > 100) {
+            sizeDialog = 300
+        }
         AlertDialog (
-            onDismissRequest = {},
+            onDismissRequest = { },
             modifier = Modifier
-                .size(size = 300.dp),
+                .size(width = (sizeDialog + 150).dp, height = sizeDialog.dp),
             title = {
-                Row {
-                    Icon (
-                        Icons.Default.Warning,
-                        contentDescription = "Warning icon",
-                        modifier = Modifier
-                            .padding(all = 5.dp)
-                            .size(size = 30.dp),
-                        tint = Color.Black,
-                    )
-                    Text (text = "Ошибка!")
+                Column {
+                    Row (
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon (
+                            Icons.Default.Warning,
+                            contentDescription = "Warning icon",
+                            modifier = Modifier
+                                .padding(all = 5.dp)
+                                .size(size = 40.dp),
+                            tint = Color.Black
+                        )
+                        Text (text = "Ошибка!")
+                    }
                 }
             },
             confirmButton = {
-                Button (
-                    onClick = onDismiss
+                Box (
+                    modifier = Modifier
+                        .fillMaxSize(),
+                     contentAlignment = Alignment.BottomEnd
                 ) {
-                    Text (text = "Понятно")
+                    Button(
+                            onClick = onDismiss
+                    ) {
+                        Text(text = "Понятно")
+                    }
                 }
             },
             text = {
