@@ -21,8 +21,8 @@ class Cell {
 
     fun getWeight(): Int {
         return when(this.base){
-            Base.GRASS -> 10
-            Base.WATER -> 30
+            Base.GRASS -> 1
+            Base.WATER -> 3
             Base.STONE -> -1
         }
     }

@@ -16,7 +16,7 @@ class Algorithm(private var field: Field){
     private var offset = 0
 
     private fun heuristic (x: Int, y: Int, fx: Int, fy: Int): Int {
-        return 20*(abs(fx-x) + abs(fy-y))
+        return 2*(abs(fx-x) + abs(fy-y))
     }
 
     fun cellProcess () {
@@ -81,6 +81,23 @@ class Algorithm(private var field: Field){
             return roots
         }
         return null
+    }
+
+    fun fullIteration (): MutableMap<Cell, Cell?> {
+        while (queue.size() != 0) {
+            val cur = queue.extractMin()
+            cur.status = Status.VIEWED
+            x = cur.x
+            y = cur.y
+            if (cur == end) {
+                log.finishReached()
+                return roots
+            }
+            repeat (4) {
+                cellProcess()
+            }
+        }
+        return roots
     }
 
     fun recoverPath (roots: MutableMap<Cell, Cell?>) {

@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ca84f2-0605-402b-bc27-e7459d800ab8" name="Changes" comment="Разделил всё на отдельные файлы и сделал иконки.">
+    <list default="true" id="f3ca84f2-0605-402b-bc27-e7459d800ab8" name="Changes" comment="Добавил функции диалоговых окон для help и errors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Algorithm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Algorithm.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/CellView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/CellView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,14 +63,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;all__project&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Полина/IdeaProjects/demo1/src/jvmMain/kotlin&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "all__project",
+    "last_opened_file_path": "C:/Users/Полина/IdeaProjects/demo1/src/jvmMain/kotlin",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Полина\IdeaProjects\demo1\src\jvmMain\kotlin" />
@@ -129,7 +134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1688844592332</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Добавил функции диалоговых окон для help и errors">
+      <option name="closed" value="true" />
+      <created>1688852136020</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1688852136020</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -158,6 +171,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="a" />
     <MESSAGE value="Разделил всё на отдельные файлы и сделал иконки." />
-    <option name="LAST_COMMIT_MESSAGE" value="Разделил всё на отдельные файлы и сделал иконки." />
+    <MESSAGE value="Добавил функции диалоговых окон для help и errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил функции диалоговых окон для help и errors" />
   </component>
 </project>

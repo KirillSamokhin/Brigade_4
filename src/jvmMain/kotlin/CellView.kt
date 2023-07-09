@@ -1,3 +1,4 @@
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.min
@@ -31,7 +33,6 @@ class CellView {
             modifier = Modifier
                 .padding(all = 1.dp)
                 .aspectRatio(ratio = 1f)
-                .background(color = getColor(cell))
                 .clickable {
                     if (clickable) {
                         when {
@@ -55,6 +56,12 @@ class CellView {
                 },
             contentAlignment = Alignment.Center,
         ) {
+            Image (
+                painter = painterResource(getImageName(cell)),
+                contentDescription = "Grass picture",
+                modifier = Modifier
+                    .fillMaxSize()
+            )
             val size = min(maxWidth, maxHeight) * 0.3f
             when (cell.edge) {
                 Edge.START -> Icon (
@@ -144,6 +151,14 @@ class CellView {
         start = false
         finish = false
 
+    }
+
+    private fun getImageName (cell: Cell): String {
+        return when (cell.base) {
+            Base.GRASS -> "Grass.jpg"
+            Base.WATER -> "Water.jpg"
+            Base.STONE -> "Stone.jpg"
+        }
     }
 
     private fun getColor (cell: Cell): Color {

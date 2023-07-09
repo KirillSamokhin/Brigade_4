@@ -28,3 +28,16 @@ fun main () = application {
         controller.userInputCord()
     }
 }
+
+//fun main () = application {
+//    Window (
+//        onCloseRequest = ::exitApplication
+//    ) {
+//        Image (
+//            painter = painterResource("sample.png"),
+//            contentDescription = "Sample",
+//            modifier = Modifier
+//                .fillMaxSize()
+//        )
+//    }
+//}

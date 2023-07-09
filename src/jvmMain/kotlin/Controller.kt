@@ -286,7 +286,7 @@ class Controller {
                                     0 -> {
                                         answer = algorithm.iteration()
                                     }
-                                    1, 2, 3, 4 -> algorithm.cellProcess()
+                                    else -> algorithm.cellProcess()
                                 }
                                 if (answer != null) {
                                     algorithm.recoverPath(answer)
@@ -304,6 +304,13 @@ class Controller {
                             }
                         ) {
                             Text (text = "Сброс")
+                        }
+                        Button (
+                            onClick = {
+                                algorithm.fullIteration()
+                            }
+                        ) {
+                            Text (text = "Конец")
                         }
                     }
                     Row (
@@ -340,7 +347,7 @@ class Controller {
                 }
             },
             text = {
-                Text (text = "Описание писать тут")
+                Text (text = "Алгоритм")
             }
         )
     }
@@ -356,7 +363,7 @@ class Controller {
                 Row {
                     Icon (
                         Icons.Default.Warning,
-                        contentDescription = "Start icon",
+                        contentDescription = "Warning icon",
                         modifier = Modifier
                             .padding(all = 5.dp)
                             .size(size = 30.dp),
@@ -369,7 +376,7 @@ class Controller {
                 Button (
                     onClick = onDismiss
                 ) {
-                    Text (text = "Понятно")
+                    Text (text = "о")
                 }
             },
             text = {
