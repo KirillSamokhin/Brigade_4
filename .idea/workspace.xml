@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3ca84f2-0605-402b-bc27-e7459d800ab8" name="Changes" comment="Добавил функции диалоговых окон для help и errors">
+    <list default="true" id="f3ca84f2-0605-402b-bc27-e7459d800ab8" name="Changes" comment="пошаговость полностью готова">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Algorithm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Algorithm.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Cell.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/CellView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/CellView.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Controller.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/FileReader.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/kotlin/Main.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jvmMain/resources/Stone.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/jvmMain/resources/Stone.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +39,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
       </list>
     </option>
@@ -63,17 +58,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "all__project",
-    "last_opened_file_path": "C:/Users/Полина/IdeaProjects/demo1/src/jvmMain/kotlin",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Полина/IdeaProjects/demo1/src/jvmMain/kotlin&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Полина\IdeaProjects\demo1\src\jvmMain\kotlin" />
@@ -104,8 +95,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Kotlin.MainKt (1)" />
-        <item itemvalue="Kotlin.ControllerKt" />
         <item itemvalue="Kotlin.MainKt" />
+        <item itemvalue="Kotlin.ControllerKt" />
       </list>
     </recent_temporary>
   </component>
@@ -126,21 +117,21 @@
       <option name="project" value="LOCAL" />
       <updated>1688675310681</updated>
     </task>
-    <task id="LOCAL-00002" summary="Разделил всё на отдельные файлы и сделал иконки.">
+    <task id="LOCAL-00002" summary="финиш и старт через файл починены">
       <option name="closed" value="true" />
-      <created>1688844592332</created>
+      <created>1688829046309</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1688844592332</updated>
+      <updated>1688829046310</updated>
     </task>
-    <task id="LOCAL-00003" summary="Добавил функции диалоговых окон для help и errors">
+    <task id="LOCAL-00003" summary="пошаговость полностью готова">
       <option name="closed" value="true" />
-      <created>1688852136020</created>
+      <created>1688838513502</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1688852136020</updated>
+      <updated>1688838513502</updated>
     </task>
     <option name="localTasksCounter" value="4" />
     <servers />
@@ -170,8 +161,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="a" />
-    <MESSAGE value="Разделил всё на отдельные файлы и сделал иконки." />
-    <MESSAGE value="Добавил функции диалоговых окон для help и errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавил функции диалоговых окон для help и errors" />
+    <MESSAGE value="финиш и старт через файл починены" />
+    <MESSAGE value="пошаговость полностью готова" />
+    <option name="LAST_COMMIT_MESSAGE" value="пошаговость полностью готова" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

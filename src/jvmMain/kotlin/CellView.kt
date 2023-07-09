@@ -62,6 +62,12 @@ class CellView {
                 modifier = Modifier
                     .fillMaxSize()
             )
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .background(getColor(cell))
+
+            ){}
             val size = min(maxWidth, maxHeight) * 0.3f
             when (cell.edge) {
                 Edge.START -> Icon (
@@ -162,26 +168,12 @@ class CellView {
     }
 
     private fun getColor (cell: Cell): Color {
-        val res: Long = when(cell.base){
-            Base.GRASS -> 0xff689808
-            Base.WATER -> 0xff88cffb
-            Base.STONE -> 0xff696969
+        return when(cell.status){
+            Status.CHECK -> Color(0x88696969)
+            Status.VIEWED -> Color(0xaa161616)
+            Status.PATH -> Color.Red
+            else -> Color(0x00000000)
         }
-        var cur = Color(res)
-        val average = (cur.red + cur.green + cur.blue)/3
-        cur = when(cell.status){
-            Status.CHECK -> {
-                changeColor(average, 3, 0.1.toFloat(), cur)
-            }
-            Status.VIEWED -> {
-                changeColor(average, 2, 0.15.toFloat(), cur)
-            }
-            Status.PATH -> {
-                Color.Red
-            }
-            else -> cur
-        }
-        return cur
     }
 
     private fun changeColor (average: Float, d: Int, coefficient: Float, cur: Color): Color {
