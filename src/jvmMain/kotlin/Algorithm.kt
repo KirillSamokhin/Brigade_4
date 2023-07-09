@@ -2,7 +2,6 @@ import kotlin.math.abs
 
 class Algorithm(private var field: Field){
     private val log = Logger()
-    private var stop = false
     private var sx: Int = 0
     private var sy: Int = 0
     private var fx: Int = 0
@@ -22,13 +21,14 @@ class Algorithm(private var field: Field){
     fun cellProcess () {
         var xp = x
         var yp = y
+        println(offset)
         when (offset) {
-            0 -> xp = x-1
-            1 -> yp = y-1
-            2 -> xp = x+1
-            3 -> yp = y+1
+            1 -> xp = x-1
+            2 -> yp = y-1
+            3 -> xp = x+1
+            4 -> yp = y+1
         }
-        offset = (offset + 1) % 4
+        offset = (offset + 1) % 5
         val parent = cur
         if (xp < 0 || yp < 0 || xp >= this.field.x || yp >= this.field.y) {
             log.outOfBounds(xp, yp)
@@ -69,6 +69,7 @@ class Algorithm(private var field: Field){
     }
 
     fun iteration (): MutableMap<Cell, Cell?>? {
+        offset = (offset + 1) % 5
         if (queue.size() == 0) return roots
         cur = queue.extractMin()
         cur.status = Status.VIEWED
@@ -77,15 +78,18 @@ class Algorithm(private var field: Field){
         y = cur.y
         if(cur == end){
             log.finishReached()
-            stop = true
             return roots
         }
         return null
     }
 
     fun fullIteration (): MutableMap<Cell, Cell?> {
+        while (offset != 0){
+            cellProcess()
+        }
         while (queue.size() != 0) {
-            val cur = queue.extractMin()
+            offset = (offset + 1) % 5
+            cur = queue.extractMin()
             cur.status = Status.VIEWED
             x = cur.x
             y = cur.y

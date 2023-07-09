@@ -307,7 +307,8 @@ class Controller {
                         }
                         Button (
                             onClick = {
-                                algorithm.fullIteration()
+                                val answer = algorithm.fullIteration()
+                                algorithm.recoverPath(answer)
                             }
                         ) {
                             Text (text = "Конец")

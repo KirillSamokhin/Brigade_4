@@ -160,6 +160,7 @@ class CellView {
     }
 
     private fun getImageName (cell: Cell): String {
+        if (cell.status == Status.PATH) return "Gravel.png"//"Way.jpg"
         return when (cell.base) {
             Base.GRASS -> "Grass.jpg"
             Base.WATER -> "Water.jpg"
@@ -171,7 +172,7 @@ class CellView {
         return when(cell.status){
             Status.CHECK -> Color(0x88696969)
             Status.VIEWED -> Color(0xaa161616)
-            Status.PATH -> Color.Red
+            //Status.PATH -> Color.Red
             else -> Color(0x00000000)
         }
     }
