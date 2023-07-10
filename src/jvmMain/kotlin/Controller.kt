@@ -47,7 +47,10 @@ class Controller {
         if (showError2.value) {
             errorAlert(
                 onDismiss = { showError2.value = false },
-                message = "В файле должны быть указаны положительные размеры поля. Пример файла:\n" +
+                message = "В файле должны быть указаны положительные размеры поля, координаты Начала и Финиша." +
+                        "Координаты Начала и Финиша считаются с левого верхнего угла с координатами \"x y\" начиная" +
+                        " с \"0 0\"" +
+                        "Пример файла:\n" +
                         "7 4\n" +
                         "0 0\n" +
                         "6 3\n" +
@@ -294,13 +297,11 @@ class Controller {
                             onClick = {
                                 algorithm = Algorithm(field)
                                 field.startCord = Pair(cellView.cellStart?.x ?: 0, cellView.cellStart?.y ?: 0)
-                                println(field.startCord)
                                 if (field.startCord.first == 0 && field.startCord.second == 0) {
                                     field.field[0][0].changeEdge("START")
                                 }
                                 field.finishCord = Pair(cellView.cellFinish?.x ?: (field.x - 1),
                                         cellView.cellFinish?.y ?: (field.y - 1))
-                                println(field.finishCord)
                                 if (field.finishCord.first == field.x - 1 && field.finishCord.second == field.y - 1) {
                                     field.field[field.y - 1][field.x - 1].changeEdge("FINISH")
                                 }

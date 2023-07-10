@@ -42,12 +42,17 @@ class CellView {
                                 cell.changeEdge("START")
                                 cellStart = cell
                                 start = false
+                                if (cellStart == cellFinish) {
+                                    cellFinish = null
+                                }
                             }
                             finish -> {
-                                cellFinish?.changeEdge("NONE")
-                                cell.changeEdge("FINISH")
-                                cellFinish = cell
-                                finish = false
+                                if (cellStart != cell) {
+                                    cellFinish?.changeEdge("NONE")
+                                    cell.changeEdge("FINISH")
+                                    cellFinish = cell
+                                    finish = false
+                                }
                             }
                             else -> cell.changeBase()
                         }

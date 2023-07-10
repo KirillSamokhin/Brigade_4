@@ -6,30 +6,25 @@ class FileReader(file: String = "config.txt"){
 
     fun readMap(): Field? {
         val lines = source.readLines()
-        val x = lines[0].split(" ")[0].toIntOrNull() ?: 0
-        val y = lines[0].split(" ")[1].toIntOrNull() ?: 0
-        var sx = lines[1].split(" ")[0].toInt()
-        var sy = lines[1].split(" ")[1].toInt()
-        var fx = lines[2].split(" ")[0].toInt()
-        var fy = lines[2].split(" ")[1].toInt()
-        if (x <= 1 || y <= 1) {
+        for (i in 0..2) {
+            if (lines[i].split(" ").size != 2) {
+                return null
+            }
+        }
+        val x = lines[0].split(" ")[1].toIntOrNull() ?: 0
+        val y = lines[0].split(" ")[0].toIntOrNull() ?: 0
+        if (x !in 2..50 || y !in 2..50) {
             return null
         }
-        when {
-            sx < 0 -> sx = 0
-            sx >= x -> sx = x-1
+        val sx = lines[1].split(" ")[0].toIntOrNull() ?: 0
+        val sy = lines[1].split(" ")[1].toIntOrNull() ?: 0
+        if (sx !in 0 until x || sy !in 0 until y) {
+            return null
         }
-        when {
-            sy < 0 -> sy = 0
-            sy >= y -> sy = y - 1
-        }
-        when {
-            fx < 0 -> fx = 1
-            fx >= x -> fx = x-1
-        }
-        when {
-            fy < 0 -> fy = 1
-            fy >= y -> fy = y-1
+        val fx = lines[2].split(" ")[0].toIntOrNull() ?: 0
+        val fy = lines[2].split(" ")[1].toIntOrNull() ?: 0
+        if (fx !in 0 until x || fy !in 0 until y) {
+            return null
         }
         val field = Field(x, y)
         field.field[sy][sx].edge = Edge.START
